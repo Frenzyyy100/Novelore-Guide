@@ -57,13 +57,6 @@ body{
 }
 .nav-brand span{color:var(--carrot-light);}
 .nav-right{display:flex;align-items:center;gap:12px;}
-.back-btn{
-  font-size:.78rem;font-weight:600;color:rgba(255,255,255,.6);
-  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
-  border-radius:20px;padding:5px 13px;cursor:pointer;transition:all .2s;
-  text-decoration:none;
-}
-.back-btn:hover{background:rgba(255,255,255,.14);color:rgba(255,255,255,.9);}
 .theme-btn{
   width:34px;height:34px;border-radius:50%;
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
@@ -194,10 +187,10 @@ body{
   font-size:.78rem;line-height:1.65;color:var(--text-muted);
   white-space:pre;overflow-x:auto;
 }
-.code-block .k{color:var(--carrot-light);}   /* keyword / key */
-.code-block .s{color:var(--amber);}           /* string */
-.code-block .n{color:#88C0D0;}               /* number */
-.code-block .c{color:var(--text-faint);font-style:italic;} /* comment */
+.code-block .k{color:var(--carrot-light);}
+.code-block .s{color:var(--amber);}
+.code-block .n{color:#88C0D0;}
+.code-block .c{color:var(--text-faint);font-style:italic;}
 
 /* ══════ TIP & WARN BOXES ══════ */
 .tip, .warn, .note{
@@ -302,7 +295,6 @@ body{
 <nav class="top-nav">
   <div class="nav-brand">Nvé<span>Lore</span> <span style="color:rgba(255,255,255,.35);font-size:.85rem;font-weight:400;font-family:'DM Sans',sans-serif;">Author Guide</span></div>
   <div class="nav-right">
-    <a class="back-btn" href="index.html">← Back to App</a>
     <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" id="theme-icon">🌙</button>
   </div>
 </nav>
@@ -330,12 +322,13 @@ body{
     <ul class="toc-list">
       <li><a href="#s1"><span class="toc-num">1</span>How NovéLore Stores Novels</a></li>
       <li><a href="#s2"><span class="toc-num">2</span>Adding Your Novel — Step by Step</a></li>
-      <li><a href="#s3"><span class="toc-num">3</span>Novel Fields Reference</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span>novelDetails Fields Reference</a></li>
       <li><a href="#s4"><span class="toc-num">4</span>Volumes & Chapters Structure</a></li>
       <li><a href="#s5"><span class="toc-num">5</span>Writing & Formatting Chapter Content</a></li>
       <li><a href="#s6"><span class="toc-num">6</span>Cover Images</a></li>
-      <li><a href="#s7"><span class="toc-num">7</span>Tagging & Genres</a></li>
-      <li><a href="#s8"><span class="toc-num">8</span>Publishing Checklist</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span>Adding to Tabs & Feeds</a></li>
+      <li><a href="#s8"><span class="toc-num">8</span>The NEW Tag & Chapter Updates</a></li>
+      <li><a href="#s9"><span class="toc-num">9</span>Publishing Checklist</a></li>
     </ul>
   </div>
 
@@ -346,34 +339,28 @@ body{
     <div class="section-tag">Section 01</div>
     <h2 class="section-title">How NovéLore Stores Novels</h2>
     <div class="section-body">
-      <p>NovéLore is a <strong>single HTML file</strong>. There's no database, no server, no backend. Every novel lives directly inside the JavaScript at the bottom of <code>novelore.html</code> as a plain JavaScript array called <strong>NOVELS</strong>.</p>
-      <p>This keeps things simple — you just edit the file, save it, push to GitHub Pages, and it's live. No accounts, no CMS, no hosting costs.</p>
+      <p>NovéLore is a <strong>single HTML file</strong>. All novel data lives directly inside <code>novelore.html</code> as JavaScript objects — no database, no server, no backend. To add or update a novel, you edit the file and re-upload it.</p>
+      <p>There are two main places you'll edit when adding a novel:</p>
     </div>
-    <div class="tip">
-      <span class="tip-icon">🥕</span>
-      <p><strong>Where to find NOVELS:</strong> Open <code>novelore.html</code> in any text editor (VS Code recommended). Press <strong>Ctrl+F</strong> and search for <code>const NOVELS</code>. That's where all novels are defined.</p>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">A</div>
+        <div class="step-content">
+          <div class="step-title"><code>novelDetails</code> — the full novel data</div>
+          <div class="step-desc">This is a JavaScript object that holds everything about a novel: title, author, synopsis, cover image, all volumes, and all chapters. Every novel must have an entry here. Search for <code>const novelDetails = {</code> to find it.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">B</div>
+        <div class="step-content">
+          <div class="step-title">Data arrays — which tabs it appears in</div>
+          <div class="step-desc">Separate arrays control which tabs and sections display your novel as a card: <code>trendingData</code>, <code>hotPicksData</code>, <code>frenzyyyData</code>, <code>novelsNew</code>, <code>updatesData</code>, and <code>announcementsData</code>. You add a short entry to whichever arrays apply to your novel.</div>
+        </div>
+      </div>
     </div>
-    <div class="code-block">
-      <span class="code-label">novelore.html — simplified structure</span>
-      <pre><span class="c">// Inside the &lt;script&gt; tag near the bottom of the file:</span>
-<span class="k">const</span> NOVELS = [
-  {
-    <span class="k">id</span>: <span class="s">"ashes-forgotten-king"</span>,
-    <span class="k">title</span>: <span class="s">"Ashes of the Forgotten King"</span>,
-    <span class="k">author</span>: <span class="s">"Frenzyyy"</span>,
-    <span class="c">// ... more fields ...</span>
-    <span class="k">volumes</span>: [
-      {
-        <span class="k">number</span>: <span class="n">1</span>,
-        <span class="k">title</span>: <span class="s">"The Tomb Unsealed"</span>,
-        <span class="k">chapters</span>: [
-          { <span class="k">number</span>: <span class="n">1</span>, <span class="k">title</span>: <span class="s">"The Dusty Gate"</span>, <span class="k">date</span>: <span class="s">"Jan 01, 2026"</span>,
-            <span class="k">content</span>: <span class="s">`Your chapter text goes here...`</span> }
-        ]
-      }
-    ]
-  }
-];</pre>
+    <div class="note" style="margin-top:20px">
+      <span class="note-icon">📌</span>
+      <p>Think of <strong>novelDetails</strong> as the database record, and the <strong>data arrays</strong> as the display lists. Your novel needs to be in both places to show up and be readable.</p>
     </div>
   </div>
 
@@ -394,33 +381,40 @@ body{
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
-          <div class="step-title">Find the NOVELS array</div>
-          <div class="step-desc">Press <strong>Ctrl+F</strong>, search for <code>const NOVELS = [</code>. The array starts with <code>[</code> and ends with <code>];</code>. Each novel is an object <code>{ }</code> inside it, separated by commas.</div>
+          <div class="step-title">Find <code>novelDetails</code></div>
+          <div class="step-desc">Press <strong>Ctrl+F</strong> and search for <code>const novelDetails = {</code>. You'll see existing novels listed as <code>'novel-id': { ... }</code>. Add yours after the last one, making sure there's a comma separating them.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">3</div>
         <div class="step-content">
-          <div class="step-title">Add your novel object</div>
-          <div class="step-desc">Copy the template below and paste it inside the NOVELS array. Add a comma after the previous novel's closing <code>}</code> before your new one.</div>
+          <div class="step-title">Paste your novel template into novelDetails</div>
+          <div class="step-desc">Copy the full template from Section 3 and paste it inside the <code>novelDetails</code> object. Give it a unique key like <code>'my-novel'</code>.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">4</div>
         <div class="step-content">
-          <div class="step-title">Fill in your details</div>
-          <div class="step-desc">Replace every placeholder with your actual novel data — title, author, synopsis, and most importantly, your chapter content using backtick strings.</div>
+          <div class="step-title">Add card entries to the right data arrays</div>
+          <div class="step-desc">Search for <code>const frenzyyyData</code>, <code>const trendingData</code>, <code>const novelsNew</code>, etc. Add a short card object for your novel to whichever arrays you want it to appear in. See Section 7 for details.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">5</div>
         <div class="step-content">
-          <div class="step-title">Save and test locally</div>
-          <div class="step-desc">Save the file and open it in Chrome or Firefox. If your novel doesn't appear, open DevTools (F12) → Console. Any red error will tell you exactly what's wrong (usually a missing comma or unclosed backtick).</div>
+          <div class="step-title">Fill in your chapter content</div>
+          <div class="step-desc">Replace every placeholder with your actual novel data — title, author, synopsis, and most importantly, your chapter content using backtick strings.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Save and test locally</div>
+          <div class="step-desc">Save the file and open it in Chrome or Firefox. If your novel doesn't appear, open DevTools (F12) → Console. Any red error will tell you exactly what's wrong — usually a missing comma or unclosed backtick.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">7</div>
         <div class="step-content">
           <div class="step-title">Push to GitHub Pages</div>
           <div class="step-desc">Commit and push. Your novel is live within 1–2 minutes at your GitHub Pages URL.</div>
@@ -434,45 +428,43 @@ body{
   <div class="section">
     <span class="section-anchor" id="s3"></span>
     <div class="section-tag">Section 03</div>
-    <h2 class="section-title">Novel Fields Reference</h2>
+    <h2 class="section-title">novelDetails Fields Reference</h2>
     <div class="section-body">
-      <p>Here is every field a novel object can have. Required fields must be present or your novel won't load correctly.</p>
+      <p>Every novel lives inside the <code>novelDetails</code> object. Here is the full template and a breakdown of every field.</p>
     </div>
 
     <div class="code-block">
-      <span class="code-label">Full Novel Template — Copy This</span>
-      <pre>{
-  <span class="k">id</span>:        <span class="s">"my-novel-slug"</span>,         <span class="c">// unique, lowercase, hyphens only</span>
-  <span class="k">title</span>:     <span class="s">"My Novel Title"</span>,
-  <span class="k">author</span>:    <span class="s">"Your Name"</span>,
-  <span class="k">cover</span>:     <span class="s">"https://..."</span>,            <span class="c">// image URL or "" for placeholder</span>
-  <span class="k">synopsis</span>:  <span class="s">"A short 2–3 sentence summary of your story."</span>,
-  <span class="k">genre</span>:     <span class="s">"Fantasy"</span>,
-  <span class="k">tags</span>:      [<span class="s">"Magic"</span>, <span class="s">"Adventure"</span>, <span class="s">"Mystery"</span>],
-  <span class="k">status</span>:    <span class="s">"Ongoing"</span>,                <span class="c">// "Ongoing" | "Completed" | "Hiatus"</span>
-  <span class="k">section</span>:   <span class="s">"frenzyyy"</span>,               <span class="c">// which tab it appears in</span>
-  <span class="k">trending</span>:  <span class="n">true</span>,                     <span class="c">// shows in Trending tab</span>
-  <span class="k">hotpick</span>:   <span class="n">false</span>,
-  <span class="k">updated</span>:   <span class="s">"Feb 15, 2026"</span>,           <span class="c">// shown on the novel card</span>
+      <span class="code-label">Full novelDetails Entry — Copy This</span>
+      <pre><span class="s">'my-novel'</span>: {
+  <span class="k">id</span>:            <span class="s">'my-novel'</span>,           <span class="c">// must match the key above</span>
+  <span class="k">title</span>:         <span class="s">'My Novel Title'</span>,
+  <span class="k">author</span>:        <span class="s">'Your Name'</span>,
+  <span class="k">bg</span>:            <span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
+  <span class="k">emoji</span>:         <span class="s">'📖'</span>,                 <span class="c">// shown as placeholder when no cover</span>
+  <span class="k">coverImg</span>:      <span class="s">'https://i.imgur.com/yourimage.png'</span>, <span class="c">// or '' to use emoji</span>
+  <span class="k">genres</span>:        [<span class="s">'Fantasy'</span>, <span class="s">'Action'</span>, <span class="s">'Adventure'</span>],
+  <span class="k">status</span>:        <span class="s">'Ongoing'</span>,            <span class="c">// 'Ongoing' | 'Completed' | 'Hiatus'</span>
+  <span class="k">rating</span>:        <span class="n">4.5</span>,
+  <span class="k">datePublished</span>: <span class="s">'January 01, 2026'</span>,
+  <span class="k">synopsis</span>:      <span class="s">`Your 2–4 sentence synopsis here.`</span>,
   <span class="k">volumes</span>: [ <span class="c">/* see Section 4 */</span> ]
 },</pre>
     </div>
 
     <table class="field-table">
       <tr><th>Field</th><th>Required</th><th>Description</th></tr>
-      <tr><td class="field-name">id</td><td><span class="field-req">Required</span></td><td>Unique identifier. Use lowercase letters and hyphens only, no spaces. Must be unique across all novels. Example: <code>ashes-forgotten-king</code></td></tr>
+      <tr><td class="field-name">id</td><td><span class="field-req">Required</span></td><td>Unique identifier. Must exactly match the object key. Use lowercase letters and hyphens only. Example: <code>ashes-of-the-king</code></td></tr>
       <tr><td class="field-name">title</td><td><span class="field-req">Required</span></td><td>Full display title of your novel.</td></tr>
       <tr><td class="field-name">author</td><td><span class="field-req">Required</span></td><td>Your name or pen name.</td></tr>
-      <tr><td class="field-name">synopsis</td><td><span class="field-req">Required</span></td><td>2–4 sentence summary shown on the novel detail page. Keep it punchy and intriguing.</td></tr>
-      <tr><td class="field-name">genre</td><td><span class="field-req">Required</span></td><td>Primary genre: Fantasy, Romance, Thriller, Sci-Fi, Horror, etc.</td></tr>
+      <tr><td class="field-name">bg</td><td><span class="field-req">Required</span></td><td>CSS gradient string used as the card and novel page background. Use <a href="https://cssgradient.io" style="color:var(--carrot)">cssgradient.io</a> to pick one.</td></tr>
+      <tr><td class="field-name">emoji</td><td><span class="field-req">Required</span></td><td>A single emoji shown as the fallback when no cover image is set.</td></tr>
+      <tr><td class="field-name">synopsis</td><td><span class="field-req">Required</span></td><td>2–4 sentence summary shown on the novel detail page. Use a backtick string so it can span multiple lines.</td></tr>
+      <tr><td class="field-name">genres</td><td><span class="field-req">Required</span></td><td>Array of genre/tag strings shown as chips on the novel page. 2–4 recommended. Example: <code>['Dark Fantasy', 'Action']</code></td></tr>
       <tr><td class="field-name">volumes</td><td><span class="field-req">Required</span></td><td>Array of volume objects containing chapters. See Section 4.</td></tr>
-      <tr><td class="field-name">cover</td><td><span class="field-opt">Optional</span></td><td>URL to a cover image (HTTPS only). Leave as <code>""</code> for a generated placeholder.</td></tr>
-      <tr><td class="field-name">tags</td><td><span class="field-opt">Optional</span></td><td>Array of tag strings shown as chips. 3–6 tags recommended.</td></tr>
-      <tr><td class="field-name">status</td><td><span class="field-opt">Optional</span></td><td><code>"Ongoing"</code>, <code>"Completed"</code>, or <code>"Hiatus"</code>. Defaults to Ongoing if omitted.</td></tr>
-      <tr><td class="field-name">section</td><td><span class="field-opt">Optional</span></td><td>Which tab section to appear in: <code>"frenzyyy"</code>, <code>"trending"</code>, <code>"hotpick"</code>, or <code>"dojo"</code>.</td></tr>
-      <tr><td class="field-name">trending</td><td><span class="field-opt">Optional</span></td><td>Set <code>true</code> to include in the Trending tab.</td></tr>
-      <tr><td class="field-name">hotpick</td><td><span class="field-opt">Optional</span></td><td>Set <code>true</code> to include in Hot Picks.</td></tr>
-      <tr><td class="field-name">updated</td><td><span class="field-opt">Optional</span></td><td>Last update date shown on the card. Example: <code>"Feb 15, 2026"</code>.</td></tr>
+      <tr><td class="field-name">coverImg</td><td><span class="field-opt">Optional</span></td><td>Direct URL to a cover image (must end in .jpg, .png, etc). Leave as <code>''</code> to use the emoji placeholder instead.</td></tr>
+      <tr><td class="field-name">status</td><td><span class="field-opt">Optional</span></td><td><code>'Ongoing'</code>, <code>'Completed'</code>, or <code>'Hiatus'</code>. Defaults to Ongoing if omitted.</td></tr>
+      <tr><td class="field-name">rating</td><td><span class="field-opt">Optional</span></td><td>A number from 0.0 to 5.0 shown as a star rating on cards.</td></tr>
+      <tr><td class="field-name">datePublished</td><td><span class="field-opt">Optional</span></td><td>Publication date shown on the novel detail page. Example: <code>'January 17, 2026'</code></td></tr>
     </table>
   </div>
 
@@ -483,7 +475,7 @@ body{
     <div class="section-tag">Section 04</div>
     <h2 class="section-title">Volumes & Chapters Structure</h2>
     <div class="section-body">
-      <p>Every novel has a <strong>volumes</strong> array. Each volume has a <strong>chapters</strong> array. You can have as many volumes and chapters as you want.</p>
+      <p>Every novel has a <strong>volumes</strong> array inside its <code>novelDetails</code> entry. Each volume has a <strong>chapters</strong> array. You can have as many volumes and chapters as you want.</p>
     </div>
 
     <div class="code-block">
@@ -491,34 +483,32 @@ body{
       <pre><span class="k">volumes</span>: [
   {
     <span class="k">number</span>: <span class="n">1</span>,
-    <span class="k">title</span>:  <span class="s">"Volume Subtitle Here"</span>,
-    <span class="k">cover</span>:  <span class="s">""</span>,              <span class="c">// optional volume-specific cover</span>
+    <span class="k">title</span>:  <span class="s">'Volume Subtitle Here'</span>,
     <span class="k">chapters</span>: [
       {
         <span class="k">number</span>:  <span class="n">1</span>,
-        <span class="k">title</span>:   <span class="s">"Chapter Title Here"</span>,
-        <span class="k">date</span>:    <span class="s">"Jan 01, 2026"</span>,
+        <span class="k">title</span>:   <span class="s">'Chapter Title Here'</span>,
+        <span class="k">date</span>:    <span class="s">'Jan 01, 2026'</span>,
         <span class="k">content</span>: <span class="s">`
 Your chapter text goes here.
 
 Use blank lines to separate paragraphs.
 
 You can write as much as you want inside
-these backtick strings. They support
-multiple lines natively.
+these backtick strings.
         `</span>
       },
       {
         <span class="k">number</span>:  <span class="n">2</span>,
-        <span class="k">title</span>:   <span class="s">"Second Chapter"</span>,
-        <span class="k">date</span>:    <span class="s">"Jan 08, 2026"</span>,
+        <span class="k">title</span>:   <span class="s">'Second Chapter'</span>,
+        <span class="k">date</span>:    <span class="s">'Jan 08, 2026'</span>,
         <span class="k">content</span>: <span class="s">`Chapter 2 content here...`</span>
       }
     ]
   },
   {
     <span class="k">number</span>: <span class="n">2</span>,
-    <span class="k">title</span>:  <span class="s">"Volume 2 Subtitle"</span>,
+    <span class="k">title</span>:  <span class="s">'Volume 2 Subtitle'</span>,
     <span class="k">chapters</span>: [ <span class="c">/* more chapters */</span> ]
   }
 ]</pre>
@@ -526,7 +516,7 @@ multiple lines natively.
 
     <div class="warn">
       <span class="warn-icon">⚠️</span>
-      <p><strong>Chapter numbers must be globally unique</strong> across all volumes of a novel. Don't restart at 1 for each volume — keep counting up (Vol 1: chapters 1–8, Vol 2: chapters 9–16). The reader uses these numbers to track progress.</p>
+      <p><strong>Chapter numbers must be globally unique</strong> across all volumes of a novel. Don't restart at 1 for each volume — keep counting up (Vol 1: chapters 1–8, Vol 2: chapters 9–16). The reader uses these numbers to track progress and the NEW tag.</p>
     </div>
 
     <div class="tip">
@@ -558,9 +548,9 @@ multiple lines natively.
         <div class="format-card-head">
           <span class="format-icon">—</span>
           <span class="format-name">Scene Breaks</span>
-          <span class="format-tag">Use ✦ or ***</span>
+          <span class="format-tag">Use ---</span>
         </div>
-        <p>To indicate a scene change, put <code>✦</code> or <code>* * *</code> on its own line between paragraphs. It renders as a visual divider for the reader.</p>
+        <p>To indicate a scene change, put <code>---</code> on its own line between paragraphs. It renders as a centered "· · ·" visual divider for the reader.</p>
       </div>
       <div class="format-card">
         <div class="format-card-head">
@@ -573,10 +563,10 @@ multiple lines natively.
       <div class="format-card">
         <div class="format-card-head">
           <span class="format-icon">🧠</span>
-          <span class="format-name">Inner Thoughts</span>
-          <span class="format-tag">Italics tip</span>
+          <span class="format-name">Inner Thoughts / Emphasis</span>
+          <span class="format-tag">*asterisks*</span>
         </div>
-        <p>Wrap inner thoughts or emphasis in <code>*asterisks*</code> if the reader renders markdown, or just write them naturally in italics by pasting them directly.</p>
+        <p>Wrap text in <code>*asterisks*</code> to render it in italics. Example: <code>*This is wrong,* she thought.</code></p>
       </div>
       <div class="format-card">
         <div class="format-card-head">
@@ -600,7 +590,7 @@ flake away like dried skin. Somewhere behind him, footsteps.
 
 He didn't turn around.
 
-✦
+---
 
 The morning had started like any other. Tea, bread, the
 distant sound of the market carts rolling over cobblestone.
@@ -616,34 +606,34 @@ Nothing to suggest the world was about to split open.
     <div class="section-tag">Section 06</div>
     <h2 class="section-title">Cover Images</h2>
     <div class="section-body">
-      <p>Covers make a huge visual difference. Here are your best options:</p>
+      <p>Covers make a huge visual difference. The field name is <strong><code>coverImg</code></strong> — make sure you use this exact name everywhere.</p>
     </div>
     <div class="steps">
       <div class="step-card">
         <div class="step-num">A</div>
         <div class="step-content">
-          <div class="step-title">Use an image from the web</div>
-          <div class="step-desc">Right-click any image → "Copy image address". Paste the full HTTPS URL into the <code>cover</code> field. Make sure it's a tall/portrait image (2:3 ratio works best).</div>
+          <div class="step-title">Upload to Imgur (recommended)</div>
+          <div class="step-desc">Go to imgur.com, upload your image, then right-click it → "Copy image address". The URL must end in <code>.png</code> or <code>.jpg</code> (e.g. <code>https://i.imgur.com/abc123.png</code>). Paste it as the <code>coverImg</code> value.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">B</div>
         <div class="step-content">
           <div class="step-title">Upload to your GitHub repo</div>
-          <div class="step-desc">Create an <code>/images/</code> folder in your repo. Upload your cover there. Then use a relative path: <code>cover: "images/my-cover.jpg"</code>. This is the most reliable method.</div>
+          <div class="step-desc">Create an <code>/images/</code> folder in your repo. Upload your cover there. Then use a relative path: <code>coverImg: 'images/my-cover.jpg'</code>. This is the most reliable long-term method.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">C</div>
         <div class="step-content">
-          <div class="step-title">Leave it blank for a placeholder</div>
-          <div class="step-desc">Set <code>cover: ""</code> and NovéLore will auto-generate a styled placeholder with your novel's initials and a gradient. No cover image needed.</div>
+          <div class="step-title">Leave it blank for an emoji placeholder</div>
+          <div class="step-desc">Set <code>coverImg: ''</code> and NovéLore will auto-generate a styled placeholder using your novel's <code>emoji</code> and <code>bg</code> gradient. No image needed.</div>
         </div>
       </div>
     </div>
     <div class="warn">
       <span class="warn-icon">⚠️</span>
-      <p><strong>Avoid hotlinking covers from random sites</strong> — images can disappear or be blocked. GitHub, Imgur (direct link ending in .jpg/.png), or your own repo are the safest options.</p>
+      <p><strong>Add coverImg in every place</strong> the novel appears — inside <code>novelDetails</code>, and in each data array entry (<code>trendingData</code>, <code>frenzyyyData</code>, <code>novelsNew</code>, etc). If you miss one, the card will show the emoji placeholder instead of the cover.</p>
     </div>
   </div>
 
@@ -652,24 +642,44 @@ Nothing to suggest the world was about to split open.
   <div class="section">
     <span class="section-anchor" id="s7"></span>
     <div class="section-tag">Section 07</div>
-    <h2 class="section-title">Tagging & Genres</h2>
+    <h2 class="section-title">Adding to Tabs & Feeds</h2>
     <div class="section-body">
-      <p>Tags help readers find your novel and appear as chips on the novel page. Use 3–6 tags. Below are suggested values:</p>
+      <p>Beyond <code>novelDetails</code>, you add short card objects to separate arrays that control which tabs and feeds display your novel. Each array is clearly labeled with a comment in the file.</p>
     </div>
 
     <table class="field-table">
-      <tr><th>Genre</th><th>Suggested Tags</th></tr>
-      <tr><td>Fantasy</td><td>Magic, Royalty, Adventure, Dark Fantasy, Cultivation, Isekai, Kingdom</td></tr>
-      <tr><td>Romance</td><td>Slow Burn, Second Chance, Enemies to Lovers, Historical, Modern</td></tr>
-      <tr><td>Thriller</td><td>Mystery, Conspiracy, Crime, Psychological, Survival</td></tr>
-      <tr><td>Sci-Fi</td><td>Space, Dystopia, Cyberpunk, AI, Time Travel, Post-Apocalyptic</td></tr>
-      <tr><td>Horror</td><td>Supernatural, Gothic, Monsters, Psychological, Creature</td></tr>
-      <tr><td>Action</td><td>Martial Arts, Arena, Tournament, Revenge, Reincarnation</td></tr>
+      <tr><th>Array</th><th>Where it shows</th><th>Required fields</th></tr>
+      <tr><td class="field-name">trendingData</td><td>🔥 Trending tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
+      <tr><td class="field-name">hotPicksData</td><td>⭐ Hot Picks tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
+      <tr><td class="field-name">frenzyyyData</td><td>✍️ Frenzyyy's Work tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
+      <tr><td class="field-name">novelsNew</td><td>✨ What's New tab</td><td>title, novelId, emoji, bg, description, genre, status, rating, isNew, coverImg</td></tr>
+      <tr><td class="field-name">updatesData</td><td>Chapter updates feed</td><td>novelId, novelTitle, emoji, chapter, chapterTitle, time</td></tr>
+      <tr><td class="field-name">announcementsData</td><td>Announcements feed</td><td>title, body, type, date, novelId</td></tr>
     </table>
+
+    <div class="code-block">
+      <span class="code-label">Example — Adding to frenzyyyData and novelsNew</span>
+      <pre><span class="c">// Frenzyyy's Work tab card</span>
+<span class="k">const frenzyyyData</span> = [
+  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+    <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
+    <span class="k">rating</span>:<span class="n">4.5</span>, <span class="k">genre</span>:<span class="s">'Fantasy'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>,
+    <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
+];
+
+<span class="c">// What's New tab card</span>
+<span class="k">const novelsNew</span> = [
+  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+    <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
+    <span class="k">description</span>:<span class="s">'A short tagline for the novel.'</span>,
+    <span class="k">genre</span>:<span class="s">'Fantasy'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>, <span class="k">rating</span>:<span class="n">4.5</span>,
+    <span class="k">isNew</span>:<span class="n">true</span>, <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
+];</pre>
+    </div>
 
     <div class="note">
       <span class="note-icon">📌</span>
-      <p>The <strong>section</strong> field controls which tab your novel appears in. Use <code>"frenzyyy"</code> to show it under <em>Frenzyyy's Work</em>. Set <code>trending: true</code> to also show it in Trending.</p>
+      <p>The <code>announcementsData</code> type field accepts three values: <code>'new'</code> (orange), <code>'event'</code> (amber), or <code>'system'</code> (grey). Pick whichever fits the announcement.</p>
     </div>
   </div>
 
@@ -678,18 +688,48 @@ Nothing to suggest the world was about to split open.
   <div class="section">
     <span class="section-anchor" id="s8"></span>
     <div class="section-tag">Section 08</div>
+    <h2 class="section-title">The NEW Tag & Chapter Updates</h2>
+    <div class="section-body">
+      <p>The <strong>NEW</strong> badge on the chapter list is automatic — it always appears on only the <strong>latest chapter</strong> (the one with the highest chapter number). You don't need to set anything. When you add a new chapter, the badge moves to it automatically.</p>
+      <p>To announce a new chapter in the <strong>Updates feed</strong>, add an entry to <code>updatesData</code>. Always add new entries at the top of the array so the most recent update appears first.</p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Adding a Chapter Update</span>
+      <pre><span class="k">const updatesData</span> = [
+  <span class="c">// ← newest entries go at the TOP</span>
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+    <span class="k">chapter</span>:<span class="n">3</span>, <span class="k">chapterTitle</span>:<span class="s">'Vol. 1 Ch. 3 — The Title'</span>,
+    <span class="k">time</span>:<span class="s">'Apr 06, 2026'</span> },
+  <span class="c">// older entries below...</span>
+];</pre>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">🥕</span>
+      <p>The first 3 entries in <code>updatesData</code> automatically get a <strong>NEW</strong> pill badge on the updates feed. So always put your freshest chapter update at position 1.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 9 -->
+  <div class="section">
+    <span class="section-anchor" id="s9"></span>
+    <div class="section-tag">Section 09</div>
     <h2 class="section-title">Publishing Checklist</h2>
     <div class="section-body">
       <p>Before you push to GitHub, run through this checklist:</p>
     </div>
     <ul class="checklist">
-      <li><strong>Unique ID:</strong> My novel's <code>id</code> doesn't match any existing novel</li>
+      <li><strong>Unique ID:</strong> My novel's <code>id</code> in <code>novelDetails</code> doesn't match any existing novel</li>
+      <li><strong>Key matches ID:</strong> The <code>novelDetails</code> key (e.g. <code>'my-novel'</code>) exactly matches the <code>id</code> field inside</li>
       <li><strong>Backtick strings:</strong> All chapter <code>content</code> fields use backticks <code>`</code>, not quotes</li>
       <li><strong>No backticks in text:</strong> My chapter text doesn't contain the <code>`</code> character</li>
       <li><strong>Global chapter numbers:</strong> Chapter numbers don't restart at 1 in Vol 2+</li>
-      <li><strong>Commas between novels:</strong> Each novel object in NOVELS is separated by a comma</li>
-      <li><strong>Commas between chapters:</strong> Each chapter object is separated by a comma</li>
-      <li><strong>Tested locally:</strong> Opened in browser, novel appears, chapter opens and reads correctly</li>
+      <li><strong>Commas between entries:</strong> Every object inside <code>novelDetails</code> and data arrays is separated by a comma</li>
+      <li><strong>coverImg in all arrays:</strong> I've added <code>coverImg</code> to every array entry, not just <code>novelDetails</code></li>
+      <li><strong>updatesData updated:</strong> I've added the new chapter to <code>updatesData</code> at the top of the array</li>
+      <li><strong>Tested locally:</strong> Opened in browser, novel appears, chapter opens and reads correctly, scrolls to top on Next/Prev</li>
       <li><strong>No console errors:</strong> F12 → Console shows no red errors</li>
       <li><strong>Cover image loads:</strong> Cover image actually shows (not broken placeholder)</li>
       <li><strong>Synopsis written:</strong> Synopsis is filled in and not placeholder text</li>
@@ -697,7 +737,7 @@ Nothing to suggest the world was about to split open.
 
     <div class="tip" style="margin-top:24px">
       <span class="tip-icon">🥕</span>
-      <p><strong>Common mistake:</strong> Forgetting the comma after the previous novel's closing <code>}</code> before adding yours. VS Code will underline it in red if you do — look for the squiggly line!</p>
+      <p><strong>Common mistake:</strong> Forgetting a comma after the previous novel's closing <code>}</code> before adding yours. VS Code will underline it in red — look for the squiggly line!</p>
     </div>
   </div>
 
@@ -718,7 +758,6 @@ Nothing to suggest the world was about to split open.
     document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
   }
 
-  // Match theme to main app if possible
   try {
     const saved = localStorage.getItem('nl_theme');
     if (saved === 'light') {
