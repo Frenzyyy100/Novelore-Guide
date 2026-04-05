@@ -1,605 +1,731 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>NovéLore — Creator Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet"/>
-<style>
-/* ── Reset & Base ── */
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>NovéLore — Author's Guide</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+/* ══════ VARIABLES ══════ */
+:root{
+  --carrot:#E8622A;--carrot-deep:#C44B1A;--carrot-light:#F4924A;
+  --carrot-pale:#FDDBB8;--amber:#F5B942;
+  --radius:12px;--radius-lg:18px;
+  --tr:.3s ease;
+}
+[data-theme="dark"]{
+  --bg:#1A0D05;--bg-card:#2C1206;--bg-elevated:#3B1A08;
+  --border:rgba(255,255,255,.08);--border-mid:rgba(255,255,255,.15);
+  --text-main:#FFF0E6;--text-muted:#C4926A;--text-faint:#7A4830;
+  --nav-bg:#22100A;--code-bg:#0E0602;--code-border:rgba(232,98,42,.22);
+  --tip-bg:rgba(232,98,42,.08);--warn-bg:rgba(245,185,66,.07);
+  --num-bg:#3B1A08;
+}
+[data-theme="light"]{
+  --bg:#FFF8F0;--bg-card:#FFFFFF;--bg-elevated:#F5E6D0;
+  --border:#F0DCC8;--border-mid:rgba(160,88,42,.2);
+  --text-main:#2C1206;--text-muted:#7A4830;--text-faint:#B07A52;
+  --nav-bg:#3B1A08;--code-bg:#FFF0E0;--code-border:rgba(196,75,26,.2);
+  --tip-bg:rgba(232,98,42,.06);--warn-bg:rgba(245,185,66,.1);
+  --num-bg:#F5E6D0;
+}
+
+/* ══════ RESET ══════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{
   font-family:'DM Sans',sans-serif;
-  background:#1A0D05;
-  color:#FFF0E6;
+  background:var(--bg);color:var(--text-main);
+  min-height:100dvh;transition:background var(--tr),color var(--tr);
   line-height:1.7;
-  min-height:100dvh;
 }
 
-/* ── Layout ── */
-.wrap{max-width:780px;margin:0 auto;padding:0 20px 80px;}
+/* ══════ NAV ══════ */
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  background:var(--nav-bg);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;height:56px;
+  box-shadow:0 2px 20px rgba(0,0,0,.4);
+}
+.nav-brand{
+  font-family:'Playfair Display',serif;
+  font-size:1.1rem;font-weight:700;
+  color:#FFF0E6;letter-spacing:.3px;
+}
+.nav-brand span{color:var(--carrot-light);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.back-btn{
+  font-size:.78rem;font-weight:600;color:rgba(255,255,255,.6);
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;padding:5px 13px;cursor:pointer;transition:all .2s;
+  text-decoration:none;
+}
+.back-btn:hover{background:rgba(255,255,255,.14);color:rgba(255,255,255,.9);}
+.theme-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.95rem;cursor:pointer;transition:all .2s;
+}
+.theme-btn:hover{background:rgba(255,255,255,.16);}
 
-/* ── Header ── */
-.site-header{
-  background:linear-gradient(160deg,#2A1108 0%,#1A0D05 100%);
-  border-bottom:1px solid rgba(255,255,255,.07);
-  padding:40px 20px 36px;
-  text-align:center;
+/* ══════ HERO ══════ */
+.hero{
+  background:linear-gradient(160deg,#2A1005 0%,#1A0D05 60%);
+  padding:56px 24px 48px;text-align:center;
   position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
 }
-.site-header::before{
-  content:'';position:absolute;inset:0;opacity:.04;
-  background-image:repeating-linear-gradient(45deg,#F5B942 0,#F5B942 1px,transparent 0,transparent 50%);
-  background-size:22px 22px;pointer-events:none;
+[data-theme="light"] .hero{background:linear-gradient(160deg,#3B1A08 0%,#6B3318 100%);}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:repeating-linear-gradient(45deg,rgba(245,185,66,.04) 0,rgba(245,185,66,.04) 1px,transparent 0,transparent 50%);
+  background-size:24px 24px;pointer-events:none;
 }
-.site-header::after{
-  content:'';position:absolute;top:-80px;right:-60px;
+.hero::after{
+  content:'';position:absolute;top:-60px;right:-60px;
   width:300px;height:300px;border-radius:50%;
-  background:radial-gradient(circle,rgba(232,98,42,.18),transparent 68%);
+  background:radial-gradient(circle,rgba(232,98,42,.18),transparent 70%);
   pointer-events:none;
 }
-.logo{
+.hero-eyebrow{
+  font-size:.7rem;font-weight:700;letter-spacing:1.8px;
+  text-transform:uppercase;color:var(--carrot-light);
+  margin-bottom:14px;opacity:.9;
+}
+.hero-title{
   font-family:'Playfair Display',serif;
-  font-size:2rem;font-weight:900;
-  color:#F5B942;letter-spacing:-.5px;
-  margin-bottom:6px;position:relative;z-index:1;
+  font-size:clamp(2rem,7vw,3.2rem);
+  font-weight:900;color:#FFF0E6;
+  line-height:1.15;margin-bottom:16px;
 }
-.logo em{color:#F4924A;font-style:normal;}
-.header-sub{
-  font-size:.85rem;color:rgba(196,146,106,.8);
-  letter-spacing:.4px;position:relative;z-index:1;
-  margin-bottom:18px;
+.hero-title em{color:var(--carrot-light);font-style:italic;}
+.hero-sub{
+  font-size:.95rem;color:rgba(255,240,230,.65);
+  max-width:480px;margin:0 auto 28px;line-height:1.6;
 }
-.header-badge{
-  display:inline-block;
-  background:rgba(232,98,42,.18);border:1px solid rgba(232,98,42,.32);
-  color:#F4924A;font-size:.75rem;font-weight:700;
-  border-radius:20px;padding:5px 16px;
-  position:relative;z-index:1;
+.hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.hero-chip{
+  font-size:.72rem;font-weight:600;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,240,230,.75);border-radius:20px;padding:5px 13px;
 }
 
-/* ── Table of Contents ── */
+/* ══════ CONTENTS SIDEBAR ══════ */
+.layout{max-width:860px;margin:0 auto;padding:32px 20px 80px;}
 .toc{
-  background:#2C1206;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:14px;
-  padding:22px 24px;
-  margin:32px 0 40px;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:22px 24px;
+  margin-bottom:40px;
 }
 .toc-title{
-  font-family:'Playfair Display',serif;
-  font-size:1rem;font-weight:700;color:#F5B942;
-  margin-bottom:14px;
+  font-size:.7rem;font-weight:700;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--carrot);margin-bottom:14px;
 }
-.toc ol{padding-left:20px;}
-.toc li{margin-bottom:6px;}
-.toc a{
-  color:rgba(196,146,106,.9);font-size:.87rem;
-  text-decoration:none;transition:color .2s;
+.toc-list{list-style:none;display:flex;flex-direction:column;gap:2px;}
+.toc-list a{
+  display:flex;align-items:center;gap:10px;
+  font-size:.84rem;font-weight:500;color:var(--text-muted);
+  padding:7px 10px;border-radius:8px;text-decoration:none;
+  transition:all .2s;
 }
-.toc a:hover{color:#F4924A;}
-
-/* ── Sections ── */
-.section{margin-bottom:56px;}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.5rem;font-weight:900;color:#FFF0E6;
-  margin-bottom:6px;
-  display:flex;align-items:center;gap:12px;
-}
-.step-num{
-  flex-shrink:0;
-  width:36px;height:36px;border-radius:50%;
-  background:linear-gradient(135deg,#E8622A,#F5B942);
-  color:#fff;font-size:.85rem;font-weight:900;
+.toc-list a:hover{background:var(--bg-elevated);color:var(--text-main);}
+.toc-num{
+  width:22px;height:22px;border-radius:6px;
+  background:var(--num-bg);color:var(--carrot);
+  font-size:.65rem;font-weight:700;
   display:flex;align-items:center;justify-content:center;
-}
-.section-desc{
-  font-size:.9rem;color:rgba(196,146,106,.85);
-  margin-bottom:22px;margin-left:48px;
+  flex-shrink:0;
 }
 
-/* ── Cards ── */
-.card{
-  background:#2C1206;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:12px;
-  overflow:hidden;
-  margin-bottom:16px;
-}
-.card-hdr{
-  background:#3B1A08;
-  padding:12px 18px;
-  border-bottom:1px solid rgba(255,255,255,.06);
-  font-size:.75rem;font-weight:700;letter-spacing:1px;
-  text-transform:uppercase;color:#C4926A;
+/* ══════ SECTIONS ══════ */
+.section{margin-bottom:56px;}
+.section-anchor{position:relative;top:-72px;visibility:hidden;}
+.section-tag{
+  font-size:.65rem;font-weight:700;letter-spacing:1.6px;
+  text-transform:uppercase;color:var(--carrot);margin-bottom:10px;
   display:flex;align-items:center;gap:8px;
 }
-.card-body{padding:18px 20px;}
+.section-tag::after{content:'';flex:1;height:1px;background:var(--border);}
+.section-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.3rem,4vw,1.75rem);font-weight:700;
+  color:var(--text-main);margin-bottom:14px;line-height:1.25;
+}
+.section-body{font-size:.9rem;color:var(--text-muted);line-height:1.75;}
+.section-body p{margin-bottom:12px;}
+.section-body strong{color:var(--text-main);font-weight:600;}
 
-/* ── Code blocks ── */
-pre{
-  background:#140A03;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;
-  padding:18px 20px;
-  overflow-x:auto;
-  font-size:.83rem;
-  line-height:1.7;
-  color:#FFF0E6;
-  white-space:pre;
+/* ══════ STEP CARDS ══════ */
+.steps{display:flex;flex-direction:column;gap:14px;margin-top:20px;}
+.step-card{
+  display:flex;gap:16px;align-items:flex-start;
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 20px;
+  transition:border-color .2s;
 }
-code{
-  font-family:'Courier New',Courier,monospace;
-}
-.comment{color:rgba(196,146,106,.6);}
-.key{color:#F5B942;}
-.val{color:#90D080;}
-.val-str{color:#80C0FF;}
-.val-num{color:#FFB06A;}
-.punct{color:rgba(255,240,230,.4);}
-
-/* ── Inline code ── */
-.ic{
-  background:#3B1A08;border:1px solid rgba(255,255,255,.1);
-  border-radius:5px;padding:1px 7px;
-  font-family:'Courier New',monospace;font-size:.82em;
-  color:#F4924A;
-}
-
-/* ── Tips ── */
-.tip{
-  background:rgba(245,185,66,.07);
-  border:1px solid rgba(245,185,66,.18);
-  border-left:3px solid #F5B942;
-  border-radius:0 10px 10px 0;
-  padding:14px 16px;
-  margin:16px 0;
-  font-size:.87rem;
-  color:rgba(255,240,230,.85);
-}
-.tip strong{color:#F5B942;}
-.warn{
-  background:rgba(232,98,42,.07);
-  border:1px solid rgba(232,98,42,.2);
-  border-left:3px solid #E8622A;
-  border-radius:0 10px 10px 0;
-  padding:14px 16px;
-  margin:16px 0;
-  font-size:.87rem;
-  color:rgba(255,240,230,.85);
-}
-.warn strong{color:#F4924A;}
-
-/* ── Step list ── */
-.steps{list-style:none;padding:0;margin:16px 0;}
-.steps li{
-  display:flex;gap:14px;
-  padding:14px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
-  font-size:.88rem;color:rgba(255,240,230,.85);
-  align-items:flex-start;
-}
-.steps li:last-child{border-bottom:none;}
-.step-dot{
-  flex-shrink:0;width:24px;height:24px;border-radius:50%;
-  background:rgba(232,98,42,.18);border:1.5px solid rgba(232,98,42,.35);
-  color:#F4924A;font-size:.72rem;font-weight:700;
+.step-card:hover{border-color:var(--code-border);}
+.step-num{
+  width:32px;height:32px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--carrot),var(--carrot-deep));
+  color:#fff;font-size:.8rem;font-weight:800;
   display:flex;align-items:center;justify-content:center;
-  margin-top:1px;
 }
+.step-content{}
+.step-title{font-size:.88rem;font-weight:700;color:var(--text-main);margin-bottom:5px;}
+.step-desc{font-size:.82rem;color:var(--text-muted);line-height:1.6;}
 
-/* ── Field table ── */
-.field-table{width:100%;border-collapse:collapse;font-size:.85rem;margin:14px 0;}
+/* ══════ CODE BLOCKS ══════ */
+.code-block{
+  background:var(--code-bg);border:1px solid var(--code-border);
+  border-radius:var(--radius);padding:18px 20px;margin:18px 0;
+  overflow-x:auto;position:relative;
+}
+.code-label{
+  font-size:.62rem;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--carrot);margin-bottom:10px;
+  display:block;
+}
+.code-block pre{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.78rem;line-height:1.65;color:var(--text-muted);
+  white-space:pre;overflow-x:auto;
+}
+.code-block .k{color:var(--carrot-light);}   /* keyword / key */
+.code-block .s{color:var(--amber);}           /* string */
+.code-block .n{color:#88C0D0;}               /* number */
+.code-block .c{color:var(--text-faint);font-style:italic;} /* comment */
+
+/* ══════ TIP & WARN BOXES ══════ */
+.tip, .warn, .note{
+  border-radius:var(--radius);padding:14px 18px;
+  margin:16px 0;font-size:.84rem;line-height:1.65;
+  display:flex;gap:12px;align-items:flex-start;
+}
+.tip{background:var(--tip-bg);border-left:3px solid var(--carrot);}
+.warn{background:var(--warn-bg);border-left:3px solid var(--amber);}
+.note{background:var(--bg-elevated);border-left:3px solid var(--border-mid);}
+.tip-icon,.warn-icon,.note-icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+.tip p,.warn p,.note p{color:var(--text-muted);margin:0;}
+.tip strong,.warn strong,.note strong{color:var(--text-main);}
+
+/* ══════ FIELD TABLE ══════ */
+.field-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;}
 .field-table th{
   text-align:left;padding:9px 14px;
-  background:#3B1A08;color:#C4926A;
-  font-size:.72rem;letter-spacing:.8px;text-transform:uppercase;
-  font-weight:700;
+  background:var(--bg-elevated);color:var(--carrot);
+  font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
 }
-.field-table th:first-child{border-radius:8px 0 0 0;}
-.field-table th:last-child{border-radius:0 8px 0 0;}
 .field-table td{
-  padding:10px 14px;
-  border-bottom:1px solid rgba(255,255,255,.05);
-  color:rgba(255,240,230,.85);
-  vertical-align:top;
+  padding:10px 14px;border-bottom:1px solid var(--border);
+  color:var(--text-muted);vertical-align:top;
 }
 .field-table tr:last-child td{border-bottom:none;}
-.field-table td:first-child{color:#F4924A;font-family:monospace;font-size:.82em;white-space:nowrap;}
-.req{color:#E84242;font-size:.68rem;font-weight:700;background:rgba(232,66,66,.12);
-  border:1px solid rgba(232,66,66,.22);border-radius:20px;padding:1px 7px;}
-.opt{color:#C4926A;font-size:.68rem;font-weight:700;background:rgba(196,146,106,.1);
-  border:1px solid rgba(196,146,106,.2);border-radius:20px;padding:1px 7px;}
-
-/* ── Divider ── */
-.divider{height:1px;background:rgba(255,255,255,.06);margin:48px 0;}
-
-/* ── Quick ref ── */
-.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:16px 0;}
-.qr-card{
-  background:#2C1206;border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;padding:16px;
+.field-table tr:hover td{background:var(--bg-elevated);}
+.field-name{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.76rem;color:var(--carrot-light);font-weight:600;
 }
-.qr-label{font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;
-  color:#C4926A;margin-bottom:6px;}
-.qr-val{font-size:.82rem;color:#FFF0E6;font-family:monospace;}
-
-/* ── Back to top ── */
-.back-top{
-  display:block;text-align:center;
-  font-size:.8rem;color:rgba(196,146,106,.6);
-  text-decoration:none;margin-top:24px;
-  transition:color .2s;
+.field-req{
+  font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;
+  background:rgba(232,98,42,.15);color:var(--carrot);
 }
-.back-top:hover{color:#F4924A;}
+.field-opt{
+  font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;
+  background:var(--bg-elevated);color:var(--text-faint);
+}
 
-/* ── Footer ── */
+/* ══════ CHAPTER FORMAT CARDS ══════ */
+.format-grid{display:flex;flex-direction:column;gap:12px;margin-top:16px;}
+.format-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:16px 18px;
+}
+.format-card-head{
+  display:flex;align-items:center;gap:10px;margin-bottom:8px;
+}
+.format-icon{font-size:1.1rem;}
+.format-name{font-size:.86rem;font-weight:700;color:var(--text-main);}
+.format-tag{
+  margin-left:auto;font-size:.63rem;font-weight:700;
+  background:var(--bg-elevated);color:var(--text-faint);
+  border-radius:20px;padding:2px 9px;
+}
+.format-card p{font-size:.81rem;color:var(--text-muted);line-height:1.6;}
+
+/* ══════ CHECKLIST ══════ */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px;}
+.checklist li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:.85rem;color:var(--text-muted);line-height:1.55;
+}
+.checklist li::before{
+  content:'◆';color:var(--carrot);font-size:.6rem;
+  flex-shrink:0;margin-top:4px;
+}
+.checklist li strong{color:var(--text-main);}
+
+/* ══════ DIVIDER ══════ */
+.divider{height:1px;background:var(--border);margin:48px 0;}
+
+/* ══════ FOOTER ══════ */
 .guide-footer{
-  text-align:center;padding:28px 20px;
-  border-top:1px solid rgba(255,255,255,.06);
-  font-size:.78rem;color:rgba(196,146,106,.45);
-  margin-top:60px;
+  text-align:center;padding:32px 20px;
+  border-top:1px solid var(--border);
+  font-size:.78rem;color:var(--text-faint);
 }
-.guide-footer strong{color:#F5B942;}
-</style>
+.guide-footer span{color:var(--carrot);}
+
+/* ══════ ANIMATIONS ══════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.section{animation:fadeUp .5s ease both;}
+.section:nth-child(1){animation-delay:.05s}
+.section:nth-child(2){animation-delay:.1s}
+.section:nth-child(3){animation-delay:.15s}
+.section:nth-child(4){animation-delay:.2s}
+.section:nth-child(5){animation-delay:.25s}
+.section:nth-child(6){animation-delay:.3s}
+
+/* ══════ SCROLLBAR ══════ */
+::-webkit-scrollbar{width:6px;height:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--text-faint);border-radius:6px;}
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-  <div class="logo">📖 Novél<em>ore</em></div>
-  <div class="header-sub">Creator's Guide — How to Add Your Novel</div>
-  <div class="header-badge">✍️ Written for Frenzyyy</div>
-</header>
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="nav-brand">Nvé<span>Lore</span> <span style="color:rgba(255,255,255,.35);font-size:.85rem;font-weight:400;font-family:'DM Sans',sans-serif;">Author Guide</span></div>
+  <div class="nav-right">
+    <a class="back-btn" href="index.html">← Back to App</a>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme" id="theme-icon">🌙</button>
+  </div>
+</nav>
 
-<div class="wrap">
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">📖 NovéLore Platform</div>
+  <h1 class="hero-title">The <em>Author's</em><br>Complete Guide</h1>
+  <p class="hero-sub">Everything you need to write, structure, and publish your own novel on NovéLore — from your first chapter to a full multi-volume series.</p>
+  <div class="hero-chips">
+    <div class="hero-chip">📁 File Structure</div>
+    <div class="hero-chip">✍️ Writing Format</div>
+    <div class="hero-chip">🗂️ Volumes & Chapters</div>
+    <div class="hero-chip">🖼️ Covers & Images</div>
+    <div class="hero-chip">🐰 Frenzyyy's Work</div>
+  </div>
+</div>
 
-  <!-- Table of Contents -->
-  <nav class="toc">
-    <div class="toc-title">📋 What's in this guide</div>
-    <ol>
-      <li><a href="#s1">Open the right file &amp; find the content section</a></li>
-      <li><a href="#s2">Add your novel's details</a></li>
-      <li><a href="#s3">Add volumes and chapters</a></li>
-      <li><a href="#s4">Add it to the home page carousels</a></li>
-      <li><a href="#s5">Add chapter updates &amp; announcements</a></li>
-      <li><a href="#s6">Add it to the hero banner (featured)</a></li>
-      <li><a href="#s7">Quick reference — all the colours</a></li>
-    </ol>
-  </nav>
+<!-- MAIN LAYOUT -->
+<div class="layout">
+
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#s1"><span class="toc-num">1</span>How NovéLore Stores Novels</a></li>
+      <li><a href="#s2"><span class="toc-num">2</span>Adding Your Novel — Step by Step</a></li>
+      <li><a href="#s3"><span class="toc-num">3</span>Novel Fields Reference</a></li>
+      <li><a href="#s4"><span class="toc-num">4</span>Volumes & Chapters Structure</a></li>
+      <li><a href="#s5"><span class="toc-num">5</span>Writing & Formatting Chapter Content</a></li>
+      <li><a href="#s6"><span class="toc-num">6</span>Cover Images</a></li>
+      <li><a href="#s7"><span class="toc-num">7</span>Tagging & Genres</a></li>
+      <li><a href="#s8"><span class="toc-num">8</span>Publishing Checklist</a></li>
+    </ul>
+  </div>
 
 
-  <!-- ── STEP 1 ── -->
-  <div class="section" id="s1">
-    <h2 class="section-title"><span class="step-num">1</span> Open the file & find where to edit</h2>
-    <p class="section-desc">Everything you need to edit is in one place near the top of the script.</p>
+  <!-- SECTION 1 -->
+  <div class="section">
+    <span class="section-anchor" id="s1"></span>
+    <div class="section-tag">Section 01</div>
+    <h2 class="section-title">How NovéLore Stores Novels</h2>
+    <div class="section-body">
+      <p>NovéLore is a <strong>single HTML file</strong>. There's no database, no server, no backend. Every novel lives directly inside the JavaScript at the bottom of <code>novelore.html</code> as a plain JavaScript array called <strong>NOVELS</strong>.</p>
+      <p>This keeps things simple — you just edit the file, save it, push to GitHub Pages, and it's live. No accounts, no CMS, no hosting costs.</p>
+    </div>
+    <div class="tip">
+      <span class="tip-icon">🥕</span>
+      <p><strong>Where to find NOVELS:</strong> Open <code>novelore.html</code> in any text editor (VS Code recommended). Press <strong>Ctrl+F</strong> and search for <code>const NOVELS</code>. That's where all novels are defined.</p>
+    </div>
+    <div class="code-block">
+      <span class="code-label">novelore.html — simplified structure</span>
+      <pre><span class="c">// Inside the &lt;script&gt; tag near the bottom of the file:</span>
+<span class="k">const</span> NOVELS = [
+  {
+    <span class="k">id</span>: <span class="s">"ashes-forgotten-king"</span>,
+    <span class="k">title</span>: <span class="s">"Ashes of the Forgotten King"</span>,
+    <span class="k">author</span>: <span class="s">"Frenzyyy"</span>,
+    <span class="c">// ... more fields ...</span>
+    <span class="k">volumes</span>: [
+      {
+        <span class="k">number</span>: <span class="n">1</span>,
+        <span class="k">title</span>: <span class="s">"The Tomb Unsealed"</span>,
+        <span class="k">chapters</span>: [
+          { <span class="k">number</span>: <span class="n">1</span>, <span class="k">title</span>: <span class="s">"The Dusty Gate"</span>, <span class="k">date</span>: <span class="s">"Jan 01, 2026"</span>,
+            <span class="k">content</span>: <span class="s">`Your chapter text goes here...`</span> }
+        ]
+      }
+    ]
+  }
+];</pre>
+    </div>
+  </div>
 
-    <ul class="steps">
-      <li><span class="step-dot">1</span> Open <strong>novelore.html</strong> in any text editor (Notepad, VS Code, etc.)</li>
-      <li><span class="step-dot">2</span> Press <strong>Ctrl + F</strong> (or Cmd + F on Mac) and search for: <span class="ic">✏️  YOUR CONTENT</span></li>
-      <li><span class="step-dot">3</span> Everything between that comment and the <span class="ic">STORAGE & THEME</span> comment is where you do all your editing. Don't touch anything below that line.</li>
+
+  <!-- SECTION 2 -->
+  <div class="section">
+    <span class="section-anchor" id="s2"></span>
+    <div class="section-tag">Section 02</div>
+    <h2 class="section-title">Adding Your Novel — Step by Step</h2>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Open novelore.html in VS Code</div>
+          <div class="step-desc">Right-click the file → "Open with Code". Never use Notepad — it doesn't handle large files well and can corrupt line endings.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Find the NOVELS array</div>
+          <div class="step-desc">Press <strong>Ctrl+F</strong>, search for <code>const NOVELS = [</code>. The array starts with <code>[</code> and ends with <code>];</code>. Each novel is an object <code>{ }</code> inside it, separated by commas.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Add your novel object</div>
+          <div class="step-desc">Copy the template below and paste it inside the NOVELS array. Add a comma after the previous novel's closing <code>}</code> before your new one.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Fill in your details</div>
+          <div class="step-desc">Replace every placeholder with your actual novel data — title, author, synopsis, and most importantly, your chapter content using backtick strings.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <div class="step-title">Save and test locally</div>
+          <div class="step-desc">Save the file and open it in Chrome or Firefox. If your novel doesn't appear, open DevTools (F12) → Console. Any red error will tell you exactly what's wrong (usually a missing comma or unclosed backtick).</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <div class="step-title">Push to GitHub Pages</div>
+          <div class="step-desc">Commit and push. Your novel is live within 1–2 minutes at your GitHub Pages URL.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 3 -->
+  <div class="section">
+    <span class="section-anchor" id="s3"></span>
+    <div class="section-tag">Section 03</div>
+    <h2 class="section-title">Novel Fields Reference</h2>
+    <div class="section-body">
+      <p>Here is every field a novel object can have. Required fields must be present or your novel won't load correctly.</p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Full Novel Template — Copy This</span>
+      <pre>{
+  <span class="k">id</span>:        <span class="s">"my-novel-slug"</span>,         <span class="c">// unique, lowercase, hyphens only</span>
+  <span class="k">title</span>:     <span class="s">"My Novel Title"</span>,
+  <span class="k">author</span>:    <span class="s">"Your Name"</span>,
+  <span class="k">cover</span>:     <span class="s">"https://..."</span>,            <span class="c">// image URL or "" for placeholder</span>
+  <span class="k">synopsis</span>:  <span class="s">"A short 2–3 sentence summary of your story."</span>,
+  <span class="k">genre</span>:     <span class="s">"Fantasy"</span>,
+  <span class="k">tags</span>:      [<span class="s">"Magic"</span>, <span class="s">"Adventure"</span>, <span class="s">"Mystery"</span>],
+  <span class="k">status</span>:    <span class="s">"Ongoing"</span>,                <span class="c">// "Ongoing" | "Completed" | "Hiatus"</span>
+  <span class="k">section</span>:   <span class="s">"frenzyyy"</span>,               <span class="c">// which tab it appears in</span>
+  <span class="k">trending</span>:  <span class="n">true</span>,                     <span class="c">// shows in Trending tab</span>
+  <span class="k">hotpick</span>:   <span class="n">false</span>,
+  <span class="k">updated</span>:   <span class="s">"Feb 15, 2026"</span>,           <span class="c">// shown on the novel card</span>
+  <span class="k">volumes</span>: [ <span class="c">/* see Section 4 */</span> ]
+},</pre>
+    </div>
+
+    <table class="field-table">
+      <tr><th>Field</th><th>Required</th><th>Description</th></tr>
+      <tr><td class="field-name">id</td><td><span class="field-req">Required</span></td><td>Unique identifier. Use lowercase letters and hyphens only, no spaces. Must be unique across all novels. Example: <code>ashes-forgotten-king</code></td></tr>
+      <tr><td class="field-name">title</td><td><span class="field-req">Required</span></td><td>Full display title of your novel.</td></tr>
+      <tr><td class="field-name">author</td><td><span class="field-req">Required</span></td><td>Your name or pen name.</td></tr>
+      <tr><td class="field-name">synopsis</td><td><span class="field-req">Required</span></td><td>2–4 sentence summary shown on the novel detail page. Keep it punchy and intriguing.</td></tr>
+      <tr><td class="field-name">genre</td><td><span class="field-req">Required</span></td><td>Primary genre: Fantasy, Romance, Thriller, Sci-Fi, Horror, etc.</td></tr>
+      <tr><td class="field-name">volumes</td><td><span class="field-req">Required</span></td><td>Array of volume objects containing chapters. See Section 4.</td></tr>
+      <tr><td class="field-name">cover</td><td><span class="field-opt">Optional</span></td><td>URL to a cover image (HTTPS only). Leave as <code>""</code> for a generated placeholder.</td></tr>
+      <tr><td class="field-name">tags</td><td><span class="field-opt">Optional</span></td><td>Array of tag strings shown as chips. 3–6 tags recommended.</td></tr>
+      <tr><td class="field-name">status</td><td><span class="field-opt">Optional</span></td><td><code>"Ongoing"</code>, <code>"Completed"</code>, or <code>"Hiatus"</code>. Defaults to Ongoing if omitted.</td></tr>
+      <tr><td class="field-name">section</td><td><span class="field-opt">Optional</span></td><td>Which tab section to appear in: <code>"frenzyyy"</code>, <code>"trending"</code>, <code>"hotpick"</code>, or <code>"dojo"</code>.</td></tr>
+      <tr><td class="field-name">trending</td><td><span class="field-opt">Optional</span></td><td>Set <code>true</code> to include in the Trending tab.</td></tr>
+      <tr><td class="field-name">hotpick</td><td><span class="field-opt">Optional</span></td><td>Set <code>true</code> to include in Hot Picks.</td></tr>
+      <tr><td class="field-name">updated</td><td><span class="field-opt">Optional</span></td><td>Last update date shown on the card. Example: <code>"Feb 15, 2026"</code>.</td></tr>
+    </table>
+  </div>
+
+
+  <!-- SECTION 4 -->
+  <div class="section">
+    <span class="section-anchor" id="s4"></span>
+    <div class="section-tag">Section 04</div>
+    <h2 class="section-title">Volumes & Chapters Structure</h2>
+    <div class="section-body">
+      <p>Every novel has a <strong>volumes</strong> array. Each volume has a <strong>chapters</strong> array. You can have as many volumes and chapters as you want.</p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Volume + Chapter Structure</span>
+      <pre><span class="k">volumes</span>: [
+  {
+    <span class="k">number</span>: <span class="n">1</span>,
+    <span class="k">title</span>:  <span class="s">"Volume Subtitle Here"</span>,
+    <span class="k">cover</span>:  <span class="s">""</span>,              <span class="c">// optional volume-specific cover</span>
+    <span class="k">chapters</span>: [
+      {
+        <span class="k">number</span>:  <span class="n">1</span>,
+        <span class="k">title</span>:   <span class="s">"Chapter Title Here"</span>,
+        <span class="k">date</span>:    <span class="s">"Jan 01, 2026"</span>,
+        <span class="k">content</span>: <span class="s">`
+Your chapter text goes here.
+
+Use blank lines to separate paragraphs.
+
+You can write as much as you want inside
+these backtick strings. They support
+multiple lines natively.
+        `</span>
+      },
+      {
+        <span class="k">number</span>:  <span class="n">2</span>,
+        <span class="k">title</span>:   <span class="s">"Second Chapter"</span>,
+        <span class="k">date</span>:    <span class="s">"Jan 08, 2026"</span>,
+        <span class="k">content</span>: <span class="s">`Chapter 2 content here...`</span>
+      }
+    ]
+  },
+  {
+    <span class="k">number</span>: <span class="n">2</span>,
+    <span class="k">title</span>:  <span class="s">"Volume 2 Subtitle"</span>,
+    <span class="k">chapters</span>: [ <span class="c">/* more chapters */</span> ]
+  }
+]</pre>
+    </div>
+
+    <div class="warn">
+      <span class="warn-icon">⚠️</span>
+      <p><strong>Chapter numbers must be globally unique</strong> across all volumes of a novel. Don't restart at 1 for each volume — keep counting up (Vol 1: chapters 1–8, Vol 2: chapters 9–16). The reader uses these numbers to track progress.</p>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">💡</span>
+      <p><strong>Backtick strings</strong> (the <code>`</code> character) are used for chapter content because they support line breaks. Regular quotes <code>"</code> do NOT — your text would all run together on one line.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 5 -->
+  <div class="section">
+    <span class="section-anchor" id="s5"></span>
+    <div class="section-tag">Section 05</div>
+    <h2 class="section-title">Writing & Formatting Chapter Content</h2>
+    <div class="section-body">
+      <p>Chapter content is plain text inside backtick strings. NovéLore automatically formats paragraphs — just leave a blank line between them, exactly like writing in a normal document.</p>
+    </div>
+
+    <div class="format-grid">
+      <div class="format-card">
+        <div class="format-card-head">
+          <span class="format-icon">¶</span>
+          <span class="format-name">Paragraphs</span>
+          <span class="format-tag">Automatic</span>
+        </div>
+        <p>Leave a blank line between paragraphs. The reader renders each paragraph as a separate block with proper spacing. No HTML needed.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-card-head">
+          <span class="format-icon">—</span>
+          <span class="format-name">Scene Breaks</span>
+          <span class="format-tag">Use ✦ or ***</span>
+        </div>
+        <p>To indicate a scene change, put <code>✦</code> or <code>* * *</code> on its own line between paragraphs. It renders as a visual divider for the reader.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-card-head">
+          <span class="format-icon">❝</span>
+          <span class="format-name">Dialogue</span>
+          <span class="format-tag">Plain quotes</span>
+        </div>
+        <p>Use regular quotation marks for dialogue. <code>"Hello," she said.</code> Each character's line should be on its own paragraph for readability.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-card-head">
+          <span class="format-icon">🧠</span>
+          <span class="format-name">Inner Thoughts</span>
+          <span class="format-tag">Italics tip</span>
+        </div>
+        <p>Wrap inner thoughts or emphasis in <code>*asterisks*</code> if the reader renders markdown, or just write them naturally in italics by pasting them directly.</p>
+      </div>
+      <div class="format-card">
+        <div class="format-card-head">
+          <span class="format-icon">⚠</span>
+          <span class="format-name">Avoid backticks inside content</span>
+          <span class="format-tag">Important!</span>
+        </div>
+        <p>Don't use the backtick character <code>`</code> inside your chapter text — it closes the content string early and breaks the file. Use apostrophes or quotes instead.</p>
+      </div>
+    </div>
+
+    <div class="code-block" style="margin-top:20px">
+      <span class="code-label">Example Well-Formatted Chapter</span>
+      <pre><span class="k">content</span>: <span class="s">`The gates of the old city hadn't been touched in three
+hundred years — or so they said.
+
+Kael ran his fingers along the cold iron, feeling the rust
+flake away like dried skin. Somewhere behind him, footsteps.
+
+"You shouldn't be here," a voice said.
+
+He didn't turn around.
+
+✦
+
+The morning had started like any other. Tea, bread, the
+distant sound of the market carts rolling over cobblestone.
+Nothing to suggest the world was about to split open.
+`</span></pre>
+    </div>
+  </div>
+
+
+  <!-- SECTION 6 -->
+  <div class="section">
+    <span class="section-anchor" id="s6"></span>
+    <div class="section-tag">Section 06</div>
+    <h2 class="section-title">Cover Images</h2>
+    <div class="section-body">
+      <p>Covers make a huge visual difference. Here are your best options:</p>
+    </div>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">A</div>
+        <div class="step-content">
+          <div class="step-title">Use an image from the web</div>
+          <div class="step-desc">Right-click any image → "Copy image address". Paste the full HTTPS URL into the <code>cover</code> field. Make sure it's a tall/portrait image (2:3 ratio works best).</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">B</div>
+        <div class="step-content">
+          <div class="step-title">Upload to your GitHub repo</div>
+          <div class="step-desc">Create an <code>/images/</code> folder in your repo. Upload your cover there. Then use a relative path: <code>cover: "images/my-cover.jpg"</code>. This is the most reliable method.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">C</div>
+        <div class="step-content">
+          <div class="step-title">Leave it blank for a placeholder</div>
+          <div class="step-desc">Set <code>cover: ""</code> and NovéLore will auto-generate a styled placeholder with your novel's initials and a gradient. No cover image needed.</div>
+        </div>
+      </div>
+    </div>
+    <div class="warn">
+      <span class="warn-icon">⚠️</span>
+      <p><strong>Avoid hotlinking covers from random sites</strong> — images can disappear or be blocked. GitHub, Imgur (direct link ending in .jpg/.png), or your own repo are the safest options.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 7 -->
+  <div class="section">
+    <span class="section-anchor" id="s7"></span>
+    <div class="section-tag">Section 07</div>
+    <h2 class="section-title">Tagging & Genres</h2>
+    <div class="section-body">
+      <p>Tags help readers find your novel and appear as chips on the novel page. Use 3–6 tags. Below are suggested values:</p>
+    </div>
+
+    <table class="field-table">
+      <tr><th>Genre</th><th>Suggested Tags</th></tr>
+      <tr><td>Fantasy</td><td>Magic, Royalty, Adventure, Dark Fantasy, Cultivation, Isekai, Kingdom</td></tr>
+      <tr><td>Romance</td><td>Slow Burn, Second Chance, Enemies to Lovers, Historical, Modern</td></tr>
+      <tr><td>Thriller</td><td>Mystery, Conspiracy, Crime, Psychological, Survival</td></tr>
+      <tr><td>Sci-Fi</td><td>Space, Dystopia, Cyberpunk, AI, Time Travel, Post-Apocalyptic</td></tr>
+      <tr><td>Horror</td><td>Supernatural, Gothic, Monsters, Psychological, Creature</td></tr>
+      <tr><td>Action</td><td>Martial Arts, Arena, Tournament, Revenge, Reincarnation</td></tr>
+    </table>
+
+    <div class="note">
+      <span class="note-icon">📌</span>
+      <p>The <strong>section</strong> field controls which tab your novel appears in. Use <code>"frenzyyy"</code> to show it under <em>Frenzyyy's Work</em>. Set <code>trending: true</code> to also show it in Trending.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 8 -->
+  <div class="section">
+    <span class="section-anchor" id="s8"></span>
+    <div class="section-tag">Section 08</div>
+    <h2 class="section-title">Publishing Checklist</h2>
+    <div class="section-body">
+      <p>Before you push to GitHub, run through this checklist:</p>
+    </div>
+    <ul class="checklist">
+      <li><strong>Unique ID:</strong> My novel's <code>id</code> doesn't match any existing novel</li>
+      <li><strong>Backtick strings:</strong> All chapter <code>content</code> fields use backticks <code>`</code>, not quotes</li>
+      <li><strong>No backticks in text:</strong> My chapter text doesn't contain the <code>`</code> character</li>
+      <li><strong>Global chapter numbers:</strong> Chapter numbers don't restart at 1 in Vol 2+</li>
+      <li><strong>Commas between novels:</strong> Each novel object in NOVELS is separated by a comma</li>
+      <li><strong>Commas between chapters:</strong> Each chapter object is separated by a comma</li>
+      <li><strong>Tested locally:</strong> Opened in browser, novel appears, chapter opens and reads correctly</li>
+      <li><strong>No console errors:</strong> F12 → Console shows no red errors</li>
+      <li><strong>Cover image loads:</strong> Cover image actually shows (not broken placeholder)</li>
+      <li><strong>Synopsis written:</strong> Synopsis is filled in and not placeholder text</li>
     </ul>
 
-    <div class="tip"><strong>💡 Tip:</strong> Save a backup of your file before editing — just duplicate it and name it <span class="ic">novelore-backup.html</span>.</div>
-  </div>
-
-
-  <!-- ── STEP 2 ── -->
-  <div class="section" id="s2">
-    <h2 class="section-title"><span class="step-num">2</span> Add your novel's details</h2>
-    <p class="section-desc">Scroll down in the file until you find <span class="ic">const novelDetails = {</span>. This is the main database for every novel. Add a new entry inside the curly braces.</p>
-
-    <div class="card">
-      <div class="card-hdr">📖 novelDetails — template for one novel</div>
-      <div class="card-body">
-<pre><code><span class="comment">// Inside novelDetails = { ... }, add this block.</span>
-<span class="comment">// Replace everything in quotes with your own content.</span>
-
-<span class="val-str">'my-novel-id'</span><span class="punct">: {</span>
-  <span class="key">id</span><span class="punct">:</span>            <span class="val-str">'my-novel-id'</span><span class="punct">,</span>   <span class="comment">// must match the key above</span>
-  <span class="key">title</span><span class="punct">:</span>         <span class="val-str">'My Novel Title'</span><span class="punct">,</span>
-  <span class="key">author</span><span class="punct">:</span>        <span class="val-str">'Your Name'</span><span class="punct">,</span>
-  <span class="key">bg</span><span class="punct">:</span>            <span class="val-str">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span><span class="punct">,</span>
-  <span class="key">emoji</span><span class="punct">:</span>         <span class="val-str">'⚔️'</span><span class="punct">,</span>
-  <span class="key">genres</span><span class="punct">:</span>        <span class="punct">[</span><span class="val-str">'Dark Fantasy'</span><span class="punct">,</span> <span class="val-str">'Action'</span><span class="punct">],</span>
-  <span class="key">status</span><span class="punct">:</span>        <span class="val-str">'Ongoing'</span><span class="punct">,</span>          <span class="comment">// 'Ongoing' or 'Completed'</span>
-  <span class="key">rating</span><span class="punct">:</span>        <span class="val-num">4.9</span><span class="punct">,</span>
-  <span class="key">datePublished</span><span class="punct">:</span> <span class="val-str">'January 1, 2026'</span><span class="punct">,</span>
-  <span class="key">synopsis</span><span class="punct">:</span> <span class="val-str">`Your synopsis goes here.
-You can write multiple paragraphs.
-Use backticks (the key above Tab) to wrap it.`</span><span class="punct">,</span>
-  <span class="key">volumes</span><span class="punct">: [</span>
-    <span class="comment">// volumes go here — see Step 3</span>
-  <span class="punct">],</span>
-<span class="punct">},</span></code></pre>
-      </div>
-    </div>
-
-    <table class="field-table">
-      <tr><th>Field</th><th>What it does</th><th></th></tr>
-      <tr><td>id</td><td>A short unique word with no spaces — used to link everything together. Example: <span class="ic">'shadow-throne'</span></td><td><span class="req">Required</span></td></tr>
-      <tr><td>title</td><td>The full display title of your novel.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>author</td><td>Your name or pen name.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>bg</td><td>The gradient color used as the cover background. See Step 7 for color options.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>emoji</td><td>One emoji that represents the novel. Shown on cards and lists.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>genres</td><td>Array of genre tags shown on the novel page. Can have 1–4 items.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>status</td><td>Either <span class="ic">'Ongoing'</span> or <span class="ic">'Completed'</span>.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>rating</td><td>A number from 1.0 to 5.0. You set this manually.</td><td><span class="opt">Optional</span></td></tr>
-      <tr><td>datePublished</td><td>When you first published, shown as a tag. Any text works.</td><td><span class="opt">Optional</span></td></tr>
-      <tr><td>synopsis</td><td>The book description. Use backtick quotes so you can write multiple lines freely.</td><td><span class="req">Required</span></td></tr>
-      <tr><td>coverImg</td><td>URL to a cover image (https://...). If left out, the first letter of the title is shown instead.</td><td><span class="opt">Optional</span></td></tr>
-    </table>
-
-    <div class="warn"><strong>⚠️ Important:</strong> The <span class="ic">id</span> field and the key (the word before the colon at the top) must be <strong>exactly the same</strong>. If they don't match, clicking the novel won't work.</div>
-  </div>
-
-
-  <!-- ── STEP 3 ── -->
-  <div class="section" id="s3">
-    <h2 class="section-title"><span class="step-num">3</span> Add volumes and chapters</h2>
-    <p class="section-desc">Inside the <span class="ic">volumes: [ ]</span> array of your novel, add one object per volume. Each volume contains an array of chapters.</p>
-
-    <div class="card">
-      <div class="card-hdr">📚 Volume structure</div>
-      <div class="card-body">
-<pre><code><span class="key">volumes</span><span class="punct">: [</span>
-  <span class="punct">{</span>
-    <span class="key">number</span><span class="punct">:</span> <span class="val-num">1</span><span class="punct">,</span>
-    <span class="key">title</span><span class="punct">:</span>  <span class="val-str">'The Tomb Unsealed'</span><span class="punct">,</span>
-    <span class="key">chapters</span><span class="punct">: [</span>
-      <span class="comment">// chapters go here — see below</span>
-    <span class="punct">],</span>
-  <span class="punct">},</span>
-  <span class="punct">{</span>
-    <span class="key">number</span><span class="punct">:</span> <span class="val-num">2</span><span class="punct">,</span>
-    <span class="key">title</span><span class="punct">:</span>  <span class="val-str">'Blood &amp; Embers'</span><span class="punct">,</span>
-    <span class="key">chapters</span><span class="punct">: [</span>
-      <span class="comment">// more chapters</span>
-    <span class="punct">],</span>
-  <span class="punct">},</span>
-<span class="punct">],</span></code></pre>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-hdr">📄 Chapter structure (one chapter)</div>
-      <div class="card-body">
-<pre><code><span class="punct">{</span>
-  <span class="key">number</span><span class="punct">:</span>   <span class="val-num">1</span><span class="punct">,</span>                    <span class="comment">// chapter number — must be unique across ALL volumes</span>
-  <span class="key">title</span><span class="punct">:</span>    <span class="val-str">'The Forgotten Name'</span><span class="punct">,</span>
-  <span class="key">date</span><span class="punct">:</span>     <span class="val-str">'Jan 1, 2026'</span><span class="punct">,</span>
-  <span class="key">volTitle</span><span class="punct">:</span> <span class="val-str">'The Tomb Unsealed'</span><span class="punct">,</span> <span class="comment">// copy the volume title here too</span>
-  <span class="key">content</span><span class="punct">:</span> <span class="val-str">`Your chapter text goes here.
-
-Write as many paragraphs as you want.
-Leave a blank line between each paragraph.
-
-Use *asterisks* around words for italics.
-
-Use --- on its own line for a scene break.`</span><span class="punct">,</span>
-<span class="punct">},</span></code></pre>
-      </div>
-    </div>
-
-    <div class="tip"><strong>💡 Chapter numbering:</strong> Chapter numbers must count up across the <em>entire novel</em>, not restart each volume. If Volume 1 has 5 chapters (1–5), Volume 2 starts at chapter 6. This is how the reader tracks your progress.</div>
-
-    <div class="tip"><strong>💡 Writing chapters:</strong> Wrap your content in backticks (<span class="ic">`like this`</span>). Inside, you can freely hit Enter for new lines, leave blank lines between paragraphs, and use <span class="ic">*word*</span> for italic text.</div>
-
-    <div class="warn"><strong>⚠️ Watch your quotes:</strong> If your chapter text contains a backtick character, you'll need to escape it with a backslash: <span class="ic">\`</span>. This is rare but worth knowing.</div>
-  </div>
-
-
-  <!-- ── STEP 4 ── -->
-  <div class="section" id="s4">
-    <h2 class="section-title"><span class="step-num">4</span> Add it to the home page carousels</h2>
-    <p class="section-desc">Find these four arrays near the top of the script. Add your novel to whichever tabs you want it to appear in.</p>
-
-    <div class="card">
-      <div class="card-hdr">🏠 Home page carousel arrays</div>
-      <div class="card-body">
-<pre><code><span class="comment">// 🔥 Trending tab</span>
-<span class="key">const</span> trendingData <span class="punct">= [</span>
-  <span class="punct">{</span> <span class="key">title</span><span class="punct">:</span><span class="val-str">'My Novel Title'</span><span class="punct">,</span> <span class="key">novelId</span><span class="punct">:</span><span class="val-str">'my-novel-id'</span><span class="punct">,</span>
-    <span class="key">emoji</span><span class="punct">:</span><span class="val-str">'⚔️'</span><span class="punct">,</span> <span class="key">bg</span><span class="punct">:</span><span class="val-str">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span><span class="punct">,</span>
-    <span class="key">rating</span><span class="punct">:</span><span class="val-num">4.9</span><span class="punct">,</span> <span class="key">genre</span><span class="punct">:</span><span class="val-str">'Dark Fantasy'</span><span class="punct">,</span> <span class="key">status</span><span class="punct">:</span><span class="val-str">'Ongoing'</span> <span class="punct">},</span>
-<span class="punct">];</span>
-
-<span class="comment">// ⭐ Hot Picks tab</span>
-<span class="key">const</span> hotPicksData  <span class="punct">= [</span> <span class="comment">/* same format */</span> <span class="punct">];</span>
-
-<span class="comment">// ⚔️ Dojo Duels tab</span>
-<span class="key">const</span> dojoDuelsData <span class="punct">= [</span> <span class="comment">/* same format */</span> <span class="punct">];</span>
-
-<span class="comment">// ✍️ Frenzyyy's Work tab</span>
-<span class="key">const</span> frenzyyyData  <span class="punct">= [</span> <span class="comment">/* same format */</span> <span class="punct">];</span></code></pre>
-      </div>
-    </div>
-
-    <div class="tip"><strong>💡 The <span class="ic">novelId</span> is the key.</strong> Make sure <span class="ic">novelId</span> exactly matches the <span class="ic">id</span> you set in <span class="ic">novelDetails</span>. That's what makes the card clickable and open the right novel.</div>
-
-    <p style="font-size:.88rem;color:rgba(196,146,106,.85);margin-top:14px;">Also find <span class="ic">const novelsNew = [</span> for the <strong>What's New</strong> tab. It uses the same format but add <span class="ic">description:</span> and <span class="ic">isNew: true</span>:</p>
-
-    <div class="card">
-      <div class="card-hdr">🆕 What's New list entry</div>
-      <div class="card-body">
-<pre><code><span class="key">const</span> novelsNew <span class="punct">= [</span>
-  <span class="punct">{</span>
-    <span class="key">title</span><span class="punct">:</span>       <span class="val-str">'My Novel Title'</span><span class="punct">,</span>
-    <span class="key">novelId</span><span class="punct">:</span>     <span class="val-str">'my-novel-id'</span><span class="punct">,</span>
-    <span class="key">emoji</span><span class="punct">:</span>       <span class="val-str">'⚔️'</span><span class="punct">,</span>
-    <span class="key">bg</span><span class="punct">:</span>          <span class="val-str">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span><span class="punct">,</span>
-    <span class="key">description</span><span class="punct">:</span> <span class="val-str">'One sentence summary shown in the list.'</span><span class="punct">,</span>
-    <span class="key">genre</span><span class="punct">:</span>       <span class="val-str">'Dark Fantasy'</span><span class="punct">,</span>
-    <span class="key">status</span><span class="punct">:</span>      <span class="val-str">'Ongoing'</span><span class="punct">,</span>
-    <span class="key">rating</span><span class="punct">:</span>      <span class="val-num">4.9</span><span class="punct">,</span>
-    <span class="key">isNew</span><span class="punct">:</span>       <span class="val-str">true</span><span class="punct">,</span>          <span class="comment">// must be true to show up</span>
-  <span class="punct">},</span>
-<span class="punct">];</span></code></pre>
-      </div>
+    <div class="tip" style="margin-top:24px">
+      <span class="tip-icon">🥕</span>
+      <p><strong>Common mistake:</strong> Forgetting the comma after the previous novel's closing <code>}</code> before adding yours. VS Code will underline it in red if you do — look for the squiggly line!</p>
     </div>
   </div>
 
-
-  <!-- ── STEP 5 ── -->
-  <div class="section" id="s5">
-    <h2 class="section-title"><span class="step-num">5</span> Add chapter updates &amp; announcements</h2>
-    <p class="section-desc">Every time you publish a new chapter, add it to <span class="ic">updatesData</span>. Add it at the top so the newest appears first.</p>
-
-    <div class="card">
-      <div class="card-hdr">🔄 Chapter update entry</div>
-      <div class="card-body">
-<pre><code><span class="key">const</span> updatesData <span class="punct">= [</span>
-  <span class="comment">// newest chapter first ↑</span>
-  <span class="punct">{</span>
-    <span class="key">novelId</span><span class="punct">:</span>      <span class="val-str">'my-novel-id'</span><span class="punct">,</span>
-    <span class="key">novelTitle</span><span class="punct">:</span>   <span class="val-str">'My Novel Title'</span><span class="punct">,</span>
-    <span class="key">emoji</span><span class="punct">:</span>        <span class="val-str">'⚔️'</span><span class="punct">,</span>
-    <span class="key">chapter</span><span class="punct">:</span>      <span class="val-num">13</span><span class="punct">,</span>           <span class="comment">// must match the chapter number in novelDetails</span>
-    <span class="key">chapterTitle</span><span class="punct">:</span> <span class="val-str">'Vol. 2 Ch. 8 — The Burning Gate'</span><span class="punct">,</span>
-    <span class="key">time</span><span class="punct">:</span>         <span class="val-str">'Just now'</span><span class="punct">,</span>
-  <span class="punct">},</span>
-  <span class="comment">// older entries below ↓</span>
-<span class="punct">];</span></code></pre>
-      </div>
-    </div>
-
-    <div class="tip"><strong>💡 Clicking an update</strong> takes the reader directly to that specific chapter. The <span class="ic">chapter</span> number here must match the <span class="ic">number</span> inside your chapter object in <span class="ic">novelDetails</span>.</div>
-
-    <p style="font-size:.88rem;color:rgba(196,146,106,.85);margin:18px 0 10px;">For big news, add to <span class="ic">announcementsData</span>. Clicking an announcement opens the novel page.</p>
-
-    <div class="card">
-      <div class="card-hdr">📢 Announcement entry</div>
-      <div class="card-body">
-<pre><code><span class="key">const</span> announcementsData <span class="punct">= [</span>
-  <span class="comment">// newest first ↑</span>
-  <span class="punct">{</span>
-    <span class="key">title</span><span class="punct">:</span>   <span class="val-str">'⚔️ Vol. 3 Has Begun!'</span><span class="punct">,</span>
-    <span class="key">body</span><span class="punct">:</span>    <span class="val-str">'Volume 3 kicks off with a bang. New chapters weekly.'</span><span class="punct">,</span>
-    <span class="key">type</span><span class="punct">:</span>    <span class="val-str">'new'</span><span class="punct">,</span>               <span class="comment">// 'new', 'event', or 'system'</span>
-    <span class="key">date</span><span class="punct">:</span>    <span class="val-str">'May 1, 2026'</span><span class="punct">,</span>
-    <span class="key">novelId</span><span class="punct">:</span> <span class="val-str">'my-novel-id'</span><span class="punct">,</span>      <span class="comment">// links the announcement to a novel</span>
-  <span class="punct">},</span>
-<span class="punct">];</span></code></pre>
-      </div>
-    </div>
-
-    <table class="field-table">
-      <tr><th>type value</th><th>What badge it shows</th></tr>
-      <tr><td>'new'</td><td>✨ New — orange badge</td></tr>
-      <tr><td>'event'</td><td>🎉 Event — amber badge</td></tr>
-      <tr><td>'system'</td><td>⚙️ System — grey badge</td></tr>
-    </table>
-  </div>
-
-
-  <!-- ── STEP 6 ── -->
-  <div class="section" id="s6">
-    <h2 class="section-title"><span class="step-num">6</span> Add it to the hero banner (featured)</h2>
-    <p class="section-desc">The hero slider at the top of the home page. You can have up to 5 slides. Find <span class="ic">const heroSlides = [</span>.</p>
-
-    <div class="card">
-      <div class="card-hdr">🌟 Hero slide entry</div>
-      <div class="card-body">
-<pre><code><span class="key">const</span> heroSlides <span class="punct">= [</span>
-  <span class="punct">{</span>
-    <span class="key">tag</span><span class="punct">:</span>         <span class="val-str">'🔥 Featured'</span><span class="punct">,</span>
-    <span class="key">title</span><span class="punct">:</span>       <span class="val-str">'My Novel Title'</span><span class="punct">,</span>
-    <span class="key">description</span><span class="punct">:</span> <span class="val-str">'One punchy line that sells the story.'</span><span class="punct">,</span>
-    <span class="key">bg</span><span class="punct">:</span>          <span class="val-str">'linear-gradient(135deg,#2C1206 0%,#5A1A08 55%,#C44B1A 100%)'</span><span class="punct">,</span>
-    <span class="key">readHref</span><span class="punct">:</span>    <span class="val-str">'#'</span><span class="punct">,</span>
-    <span class="key">novelId</span><span class="punct">:</span>     <span class="val-str">'my-novel-id'</span><span class="punct">,</span>
-  <span class="punct">},</span>
-<span class="punct">];</span></code></pre>
-      </div>
-    </div>
-
-    <div class="tip"><strong>💡 Tag ideas:</strong> <span class="ic">'🔥 Featured'</span> · <span class="ic">'⭐ Top Rated'</span> · <span class="ic">'🆕 Just Released'</span> · <span class="ic">'📖 Vol. 2 Live'</span></div>
-  </div>
 
   <div class="divider"></div>
 
-  <!-- ── STEP 7 ── -->
-  <div class="section" id="s7">
-    <h2 class="section-title"><span class="step-num">7</span> Quick reference — colours &amp; gradients</h2>
-    <p class="section-desc">Copy any of these for the <span class="ic">bg</span> field. They all look great with the dark theme.</p>
-
-    <div class="qr-grid">
-      <div class="qr-card">
-        <div class="qr-label">🔥 Dark Ember (default)</div>
-        <div class="qr-val" style="color:#F4924A;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌊 Ocean Night</div>
-        <div class="qr-val" style="color:#80C0FF;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#1A3A5C 0%,#0A1A2C 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌿 Dark Forest</div>
-        <div class="qr-val" style="color:#90D080;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#1A3A1A 0%,#0A1A0A 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌌 Deep Space</div>
-        <div class="qr-val" style="color:#B0A0FF;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#2A1A4A 0%,#0A0A1A 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌹 Crimson Dark</div>
-        <div class="qr-val" style="color:#FF8080;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#5A0A0A 0%,#1A0505 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">⚜️ Royal Gold</div>
-        <div class="qr-val" style="color:#F5B942;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#4A3000 0%,#1A1000 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌸 Dusk Rose</div>
-        <div class="qr-val" style="color:#FFB0C0;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#4A1A2A 0%,#1A0A10 100%)</div>
-      </div>
-      <div class="qr-card">
-        <div class="qr-label">🌫️ Ashen Grey</div>
-        <div class="qr-val" style="color:#C0C0C0;word-break:break-all;font-size:.75rem;">linear-gradient(160deg,#2A2A2A 0%,#0A0A0A 100%)</div>
-      </div>
-    </div>
-
-    <div class="divider"></div>
-
-    <h3 style="font-family:'Playfair Display',serif;color:#FFF0E6;font-size:1.1rem;margin-bottom:14px;">📝 Text formatting inside chapters</h3>
-    <table class="field-table">
-      <tr><th>What you type</th><th>What readers see</th></tr>
-      <tr><td>*word*</td><td>Italic text (used for thoughts, emphasis, etc.)</td></tr>
-      <tr><td>(blank line)</td><td>New paragraph</td></tr>
-      <tr><td>---</td><td>Scene break · · ·</td></tr>
-    </table>
-
-    <div class="divider"></div>
-
-    <h3 style="font-family:'Playfair Display',serif;color:#FFF0E6;font-size:1.1rem;margin-bottom:14px;">🔑 ID naming rules</h3>
-    <ul class="steps">
-      <li><span class="step-dot">✓</span> Use only lowercase letters, numbers, and hyphens. Example: <span class="ic">'shadow-throne'</span></li>
-      <li><span class="step-dot">✓</span> No spaces, no apostrophes, no special characters.</li>
-      <li><span class="step-dot">✓</span> Keep it short and descriptive — it's only used in the code, readers never see it.</li>
-      <li><span class="step-dot">✓</span> Must be unique — no two novels can share the same ID.</li>
-    </ul>
-
-    <div class="divider"></div>
-
-    <h3 style="font-family:'Playfair Display',serif;color:#FFF0E6;font-size:1.1rem;margin-bottom:14px;">🚀 Checklist — adding a new novel</h3>
-    <ul class="steps">
-      <li><span class="step-dot">1</span> Add the novel to <span class="ic">novelDetails</span> with id, title, author, bg, genres, synopsis, and volumes.</li>
-      <li><span class="step-dot">2</span> Add the novel to at least one carousel array (<span class="ic">trendingData</span>, <span class="ic">frenzyyyData</span>, etc.).</li>
-      <li><span class="step-dot">3</span> Add it to <span class="ic">novelsNew</span> if it's a fresh release (<span class="ic">isNew: true</span>).</li>
-      <li><span class="step-dot">4</span> Add its chapters to <span class="ic">updatesData</span> (newest first).</li>
-      <li><span class="step-dot">5</span> Optionally add it to <span class="ic">heroSlides</span> to feature it at the top.</li>
-      <li><span class="step-dot">6</span> Save the file and open it in your browser to test.</li>
-    </ul>
+  <div class="guide-footer">
+    Made with <span>♥</span> for NovéLore · Frenzyyy's Platform · <span>Read Without Limits</span>
   </div>
 
-  <a href="#" class="back-top">↑ Back to top</a>
+</div><!-- /layout -->
 
-</div>
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌙';
+  }
 
-<footer class="guide-footer">
-  Built for <strong>NovéLore</strong> — Read Without Limits
-</footer>
-
+  // Match theme to main app if possible
+  try {
+    const saved = localStorage.getItem('nl_theme');
+    if (saved === 'light') {
+      document.documentElement.setAttribute('data-theme','light');
+      document.getElementById('theme-icon').textContent = '☀️';
+    }
+  } catch(e) {}
+</script>
 </body>
 </html>
