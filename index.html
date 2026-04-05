@@ -34,12 +34,14 @@
 
 /* ══════ RESET ══════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
 body{
   font-family:'DM Sans',sans-serif;
   background:var(--bg);color:var(--text-main);
   min-height:100dvh;transition:background var(--tr),color var(--tr);
   line-height:1.7;
+  overflow-x:hidden;
+  word-break:break-word;
 }
 
 /* ══════ NAV ══════ */
@@ -176,6 +178,7 @@ body{
   background:var(--code-bg);border:1px solid var(--code-border);
   border-radius:var(--radius);padding:18px 20px;margin:18px 0;
   overflow-x:auto;position:relative;
+  max-width:100%;
 }
 .code-label{
   font-size:.62rem;font-weight:700;letter-spacing:1.2px;
@@ -184,8 +187,18 @@ body{
 }
 .code-block pre{
   font-family:'JetBrains Mono',monospace;
-  font-size:.78rem;line-height:1.65;color:var(--text-muted);
-  white-space:pre;overflow-x:auto;
+  font-size:.75rem;line-height:1.65;color:var(--text-muted);
+  white-space:pre-wrap;
+  word-break:break-all;
+  overflow-wrap:break-word;
+}
+@media(min-width:600px){
+  .code-block pre{
+    white-space:pre;
+    word-break:normal;
+    overflow-wrap:normal;
+  }
+  .code-block{overflow-x:auto;}
 }
 .code-block .k{color:var(--carrot-light);}
 .code-block .s{color:var(--amber);}
@@ -206,7 +219,8 @@ body{
 .tip strong,.warn strong,.note strong{color:var(--text-main);}
 
 /* ══════ FIELD TABLE ══════ */
-.field-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.82rem;}
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:16px 0;border-radius:var(--radius);border:1px solid var(--border);}
+.field-table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:480px;}
 .field-table th{
   text-align:left;padding:9px 14px;
   background:var(--bg-elevated);color:var(--carrot);
@@ -222,14 +236,15 @@ body{
 .field-name{
   font-family:'JetBrains Mono',monospace;
   font-size:.76rem;color:var(--carrot-light);font-weight:600;
+  white-space:nowrap;
 }
 .field-req{
   font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;
-  background:rgba(232,98,42,.15);color:var(--carrot);
+  background:rgba(232,98,42,.15);color:var(--carrot);white-space:nowrap;
 }
 .field-opt{
   font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:20px;
-  background:var(--bg-elevated);color:var(--text-faint);
+  background:var(--bg-elevated);color:var(--text-faint);white-space:nowrap;
 }
 
 /* ══════ CHAPTER FORMAT CARDS ══════ */
@@ -287,6 +302,22 @@ body{
 ::-webkit-scrollbar{width:6px;height:6px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--text-faint);border-radius:6px;}
+
+/* ══════ RESPONSIVE ══════ */
+@media(max-width:480px){
+  .layout{padding:24px 14px 60px;}
+  .hero{padding:40px 16px 36px;}
+  .toc{padding:16px 16px;}
+  .step-card{padding:14px 14px;}
+  .code-block{padding:14px 14px;}
+  .hero-title{font-size:1.9rem;}
+  .format-tag{display:none;}
+  .nav-brand span:last-child{display:none;}
+}
+@media(min-width:860px){
+  .layout{padding:40px 32px 80px;}
+  .format-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+}
   </style>
 </head>
 <body>
@@ -451,6 +482,7 @@ body{
 },</pre>
     </div>
 
+    <div class="table-wrap">
     <table class="field-table">
       <tr><th>Field</th><th>Required</th><th>Description</th></tr>
       <tr><td class="field-name">id</td><td><span class="field-req">Required</span></td><td>Unique identifier. Must exactly match the object key. Use lowercase letters and hyphens only. Example: <code>ashes-of-the-king</code></td></tr>
@@ -466,6 +498,7 @@ body{
       <tr><td class="field-name">rating</td><td><span class="field-opt">Optional</span></td><td>A number from 0.0 to 5.0 shown as a star rating on cards.</td></tr>
       <tr><td class="field-name">datePublished</td><td><span class="field-opt">Optional</span></td><td>Publication date shown on the novel detail page. Example: <code>'January 17, 2026'</code></td></tr>
     </table>
+    </div>
   </div>
 
 
@@ -647,6 +680,7 @@ Nothing to suggest the world was about to split open.
       <p>Beyond <code>novelDetails</code>, you add short card objects to separate arrays that control which tabs and feeds display your novel. Each array is clearly labeled with a comment in the file.</p>
     </div>
 
+    <div class="table-wrap">
     <table class="field-table">
       <tr><th>Array</th><th>Where it shows</th><th>Required fields</th></tr>
       <tr><td class="field-name">trendingData</td><td>🔥 Trending tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
@@ -656,6 +690,7 @@ Nothing to suggest the world was about to split open.
       <tr><td class="field-name">updatesData</td><td>Chapter updates feed</td><td>novelId, novelTitle, emoji, chapter, chapterTitle, time</td></tr>
       <tr><td class="field-name">announcementsData</td><td>Announcements feed</td><td>title, body, type, date, novelId</td></tr>
     </table>
+    </div>
 
     <div class="code-block">
       <span class="code-label">Example — Adding to frenzyyyData and novelsNew</span>
