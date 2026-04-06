@@ -67,6 +67,13 @@ body{
 }
 .theme-btn:hover{background:rgba(255,255,255,.16);}
 
+/* ══════ BADGE (new) ══════ */
+.new-badge{
+  font-size:.58rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;
+  background:var(--carrot);color:#fff;
+  border-radius:20px;padding:2px 7px;margin-left:8px;vertical-align:middle;
+}
+
 /* ══════ HERO ══════ */
 .hero{
   background:linear-gradient(160deg,#2A1005 0%,#1A0D05 60%);
@@ -108,6 +115,7 @@ body{
   background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);
   color:rgba(255,240,230,.75);border-radius:20px;padding:5px 13px;
 }
+.hero-chip.new{background:rgba(232,98,42,.18);border-color:rgba(232,98,42,.35);color:var(--carrot-light);}
 
 /* ══════ CONTENTS SIDEBAR ══════ */
 .layout{max-width:860px;margin:0 auto;padding:32px 20px 80px;}
@@ -340,6 +348,8 @@ body{
     <div class="hero-chip">✍️ Writing Format</div>
     <div class="hero-chip">🗂️ Volumes & Chapters</div>
     <div class="hero-chip">🖼️ Covers & Images</div>
+    <div class="hero-chip new">🎠 Hero Slides — New</div>
+    <div class="hero-chip new">🔔 Notifications — New</div>
     <div class="hero-chip">🐰 Frenzyyy's Work</div>
   </div>
 </div>
@@ -359,7 +369,10 @@ body{
       <li><a href="#s6"><span class="toc-num">6</span>Cover Images</a></li>
       <li><a href="#s7"><span class="toc-num">7</span>Adding to Tabs & Feeds</a></li>
       <li><a href="#s8"><span class="toc-num">8</span>The NEW Tag & Chapter Updates</a></li>
-      <li><a href="#s9"><span class="toc-num">9</span>Publishing Checklist</a></li>
+      <li><a href="#s9"><span class="toc-num">9</span>Hero Slides <span class="new-badge">New</span></a></li>
+      <li><a href="#s10"><span class="toc-num">10</span>Notifications <span class="new-badge">New</span></a></li>
+      <li><a href="#s11"><span class="toc-num">11</span>File Integrity & Safe Editing <span class="new-badge">New</span></a></li>
+      <li><a href="#s12"><span class="toc-num">12</span>Publishing Checklist</a></li>
     </ul>
   </div>
 
@@ -385,7 +398,7 @@ body{
         <div class="step-num">B</div>
         <div class="step-content">
           <div class="step-title">Data arrays — which tabs it appears in</div>
-          <div class="step-desc">Separate arrays control which tabs and sections display your novel as a card: <code>trendingData</code>, <code>hotPicksData</code>, <code>frenzyyyData</code>, <code>novelsNew</code>, <code>updatesData</code>, and <code>announcementsData</code>. You add a short entry to whichever arrays apply to your novel.</div>
+          <div class="step-desc">Separate arrays control which tabs and sections display your novel as a card: <code>trendingData</code>, <code>hotPicksData</code>, <code>frenzyyyData</code>, <code>dojoDuelsData</code>, <code>novelsNew</code>, <code>updatesData</code>, <code>announcementsData</code>, <code>heroSlides</code>, and <code>notificationsData</code>. You add a short entry to whichever arrays apply.</div>
         </div>
       </div>
     </div>
@@ -519,23 +532,22 @@ body{
     <span class="k">title</span>:  <span class="s">'Volume Subtitle Here'</span>,
     <span class="k">chapters</span>: [
       {
-        <span class="k">number</span>:  <span class="n">1</span>,
-        <span class="k">title</span>:   <span class="s">'Chapter Title Here'</span>,
-        <span class="k">date</span>:    <span class="s">'Jan 01, 2026'</span>,
-        <span class="k">content</span>: <span class="s">`
+        <span class="k">number</span>:   <span class="n">1</span>,
+        <span class="k">title</span>:    <span class="s">'Chapter Title Here'</span>,
+        <span class="k">date</span>:     <span class="s">'Jan 01, 2026'</span>,
+        <span class="k">volTitle</span>: <span class="s">'Volume Subtitle Here'</span>, <span class="c">// shown in reader nav bar</span>
+        <span class="k">content</span>:  <span class="s">`
 Your chapter text goes here.
 
 Use blank lines to separate paragraphs.
-
-You can write as much as you want inside
-these backtick strings.
         `</span>
       },
       {
-        <span class="k">number</span>:  <span class="n">2</span>,
-        <span class="k">title</span>:   <span class="s">'Second Chapter'</span>,
-        <span class="k">date</span>:    <span class="s">'Jan 08, 2026'</span>,
-        <span class="k">content</span>: <span class="s">`Chapter 2 content here...`</span>
+        <span class="k">number</span>:   <span class="n">2</span>,
+        <span class="k">title</span>:    <span class="s">'Second Chapter'</span>,
+        <span class="k">date</span>:     <span class="s">'Jan 08, 2026'</span>,
+        <span class="k">volTitle</span>: <span class="s">'Volume Subtitle Here'</span>,
+        <span class="k">content</span>:  <span class="s">`Chapter 2 content here...`</span>
       }
     ]
   },
@@ -545,6 +557,11 @@ these backtick strings.
     <span class="k">chapters</span>: [ <span class="c">/* more chapters */</span> ]
   }
 ]</pre>
+    </div>
+
+    <div class="note">
+      <span class="note-icon">📌</span>
+      <p>The <code>volTitle</code> field on each chapter is optional but recommended — it displays in the chapter reader's nav bar as the volume name, giving readers context about which arc they're in. Set it to the same string as the parent volume's <code>title</code>.</p>
     </div>
 
     <div class="warn">
@@ -686,6 +703,7 @@ Nothing to suggest the world was about to split open.
       <tr><td class="field-name">trendingData</td><td>🔥 Trending tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">hotPicksData</td><td>⭐ Hot Picks tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">frenzyyyData</td><td>✍️ Frenzyyy's Work tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
+      <tr><td class="field-name">dojoDuelsData</td><td>🥋 Dojo Duels tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">novelsNew</td><td>✨ What's New tab</td><td>title, novelId, emoji, bg, description, genre, status, rating, isNew, coverImg</td></tr>
       <tr><td class="field-name">updatesData</td><td>Chapter updates feed</td><td>novelId, novelTitle, emoji, chapter, chapterTitle, time</td></tr>
       <tr><td class="field-name">announcementsData</td><td>Announcements feed</td><td>title, body, type, date, novelId</td></tr>
@@ -699,6 +717,14 @@ Nothing to suggest the world was about to split open.
   { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
     <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
     <span class="k">rating</span>:<span class="n">4.5</span>, <span class="k">genre</span>:<span class="s">'Fantasy'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>,
+    <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
+];
+
+<span class="c">// Dojo Duels tab card (same shape as above)</span>
+<span class="k">const dojoDuelsData</span> = [
+  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'⚔️'</span>,
+    <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#1A3A2A 0%,#0D1A12 100%)'</span>,
+    <span class="k">rating</span>:<span class="n">4.2</span>, <span class="k">genre</span>:<span class="s">'Action'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>,
     <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
 ];
 
@@ -747,10 +773,159 @@ Nothing to suggest the world was about to split open.
   </div>
 
 
-  <!-- SECTION 9 -->
+  <!-- SECTION 9 — NEW: Hero Slides -->
   <div class="section">
     <span class="section-anchor" id="s9"></span>
-    <div class="section-tag">Section 09</div>
+    <div class="section-tag">Section 09 — New</div>
+    <h2 class="section-title">Hero Slides</h2>
+    <div class="section-body">
+      <p>The <strong>hero slider</strong> is the big auto-scrolling banner at the top of the Home tab. It's powered by the <code>heroSlides</code> array near the top of the content section in <code>novelore.html</code>. You can feature up to <strong>5 slides</strong> at once — add more than 5 and only the first 5 are shown.</p>
+      <p>Search for <code>const heroSlides = [</code> to find it.</p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">heroSlides — Full Structure</span>
+      <pre><span class="k">const heroSlides</span> = [
+  {
+    <span class="k">tag</span>:         <span class="s">'🔥 Featured'</span>,          <span class="c">// label shown as a pill badge</span>
+    <span class="k">title</span>:       <span class="s">'My Novel Title'</span>,
+    <span class="k">description</span>: <span class="s">'A one or two sentence hook that sells the story.'</span>,
+    <span class="k">bg</span>:          <span class="s">'linear-gradient(135deg,#2C1206 0%,#5A1A08 55%,#C44B1A 100%)'</span>,
+    <span class="k">novelId</span>:     <span class="s">'my-novel'</span>,             <span class="c">// links the Read Now button to your novel</span>
+    <span class="k">coverImg</span>:    <span class="s">'https://i.imgur.com/yourimage.png'</span>,
+  },
+];</pre>
+    </div>
+
+    <div class="table-wrap">
+    <table class="field-table">
+      <tr><th>Field</th><th>Required</th><th>Description</th></tr>
+      <tr><td class="field-name">tag</td><td><span class="field-req">Required</span></td><td>Small label pill shown at the top of the slide. Example: <code>'🔥 Featured'</code>, <code>'✨ New Release'</code>, <code>'📖 Ongoing'</code>.</td></tr>
+      <tr><td class="field-name">title</td><td><span class="field-req">Required</span></td><td>Novel title shown as the big heading on the slide.</td></tr>
+      <tr><td class="field-name">description</td><td><span class="field-req">Required</span></td><td>One or two sentences shown beneath the title. Keep it punchy — it's a hook, not the synopsis.</td></tr>
+      <tr><td class="field-name">bg</td><td><span class="field-req">Required</span></td><td>CSS gradient used as the slide background. Match it to your novel's color palette.</td></tr>
+      <tr><td class="field-name">novelId</td><td><span class="field-opt">Optional</span></td><td>If set, the "Read Now" button opens the novel's detail page. If omitted, use <code>readHref</code> instead with a plain URL.</td></tr>
+      <tr><td class="field-name">coverImg</td><td><span class="field-opt">Optional</span></td><td>Cover image shown on the right side of the slide. Same URL rules as everywhere else — must end in .png or .jpg.</td></tr>
+      <tr><td class="field-name">readHref</td><td><span class="field-opt">Optional</span></td><td>Fallback if you don't have a <code>novelId</code>. Set to a direct URL. Usually just use <code>novelId</code> instead.</td></tr>
+    </table>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">🥕</span>
+      <p>If <code>heroSlides</code> is left empty (<code>[]</code>), the slider shows a "Coming Soon" placeholder banner automatically — no errors, no blank space.</p>
+    </div>
+
+    <div class="warn">
+      <span class="warn-icon">⚠️</span>
+      <p>The hero slider has its own <strong>bookmark button</strong> on each slide. For it to work, make sure the same novel is also registered in <code>novelDetails</code> and the <code>novelId</code> exactly matches. Mismatched IDs mean the bookmark button silently does nothing.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 10 — NEW: Notifications -->
+  <div class="section">
+    <span class="section-anchor" id="s10"></span>
+    <div class="section-tag">Section 10 — New</div>
+    <h2 class="section-title">Notifications</h2>
+    <div class="section-body">
+      <p>The 🔔 bell icon in the top nav shows notifications to readers. These come from the <code>notificationsData</code> array. Each entry needs a <strong>stable, unique string ID</strong> — this is critical and explained below.</p>
+      <p>Search for <code>const notificationsData = [</code> to find it.</p>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">notificationsData — Structure</span>
+      <pre><span class="k">const notificationsData</span> = [
+  <span class="c">// ← always add NEW notifications at the TOP</span>
+  { <span class="k">id</span>:<span class="s">'notif-ch8'</span>,     <span class="k">msg</span>:<span class="s">'📖 Ch. 8 is live — "Title Here"!'</span>, <span class="k">time</span>:<span class="s">'Apr 06, 2026'</span>, <span class="k">read</span>:<span class="n">false</span> },
+  { <span class="k">id</span>:<span class="s">'notif-ch7'</span>,     <span class="k">msg</span>:<span class="s">'📖 Ch. 7 is live — "Title Here"!'</span>, <span class="k">time</span>:<span class="s">'Mar 20, 2026'</span>, <span class="k">read</span>:<span class="n">true</span>  },
+  { <span class="k">id</span>:<span class="s">'notif-welcome'</span>, <span class="k">msg</span>:<span class="s">'📢 Welcome to NovéLore!'</span>,             <span class="k">time</span>:<span class="s">'Jan 17, 2026'</span>, <span class="k">read</span>:<span class="n">true</span>  },
+];</pre>
+    </div>
+
+    <div class="table-wrap">
+    <table class="field-table">
+      <tr><th>Field</th><th>Required</th><th>Description</th></tr>
+      <tr><td class="field-name">id</td><td><span class="field-req">Required</span></td><td>A stable, unique string that never changes. Use a descriptive slug like <code>'notif-ch8'</code> or <code>'notif-event-april'</code>. See the critical warning below.</td></tr>
+      <tr><td class="field-name">msg</td><td><span class="field-req">Required</span></td><td>The notification text readers see. Keep it short and informative. Emoji at the start helps it stand out.</td></tr>
+      <tr><td class="field-name">time</td><td><span class="field-req">Required</span></td><td>Display date string shown under the message. Example: <code>'Apr 06, 2026'</code>.</td></tr>
+      <tr><td class="field-name">read</td><td><span class="field-req">Required</span></td><td>Set to <code>false</code> for a new notification (shows the orange dot + badge). Set to <code>true</code> for old ones that shouldn't trigger a badge.</td></tr>
+    </table>
+    </div>
+
+    <div class="warn">
+      <span class="warn-icon">⚠️</span>
+      <p><strong>The <code>id</code> field is critical — never skip it, never reuse one.</strong> NovéLore saves which notifications each reader has already read using these IDs. If you add a new notification without a unique ID (or forget it entirely), the read-state system can incorrectly mark your new notification as already read for returning visitors — meaning the badge never lights up and readers never see it. Every new entry must get a fresh, never-used-before string ID.</p>
+    </div>
+
+    <div class="tip">
+      <span class="tip-icon">🥕</span>
+      <p><strong>When adding a new notification:</strong> prepend it at the top of the array, give it a new unique <code>id</code>, and set <code>read: false</code>. That's it — the bell badge will light up automatically for all readers on their next visit.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 11 — NEW: File Integrity -->
+  <div class="section">
+    <span class="section-anchor" id="s11"></span>
+    <div class="section-tag">Section 11 — New</div>
+    <h2 class="section-title">File Integrity & Safe Editing</h2>
+    <div class="section-body">
+      <p>Because NovéLore is a single HTML file, <strong>the whole file must be intact</strong> for anything to work. A truncated or missing closing tag means the JavaScript never runs — and the app is permanently stuck on the loading screen with no error message.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <div class="step-title">Always verify the file ends correctly</div>
+          <div class="step-desc">Scroll to the absolute bottom of <code>novelore.html</code>. The last few lines should always be: <code>})();</code> followed by <code>&lt;/script&gt;</code>, <code>&lt;/body&gt;</code>, and <code>&lt;/html&gt;</code>. If any of these are missing, the page will be stuck on the loading screen.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <div class="step-title">Never copy-paste a partial file</div>
+          <div class="step-desc">When copying the file to share or back up, always use "Select All" (<strong>Ctrl+A</strong>) in VS Code to make sure you get the entire file. Copy-pasting from a browser or a chat window can silently truncate the end.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <div class="step-title">Check file size after editing</div>
+          <div class="step-desc">Right-click the file → Properties. If the file suddenly got much smaller after a save, something went wrong. Keep a backup copy before every major edit session.</div>
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <div class="step-title">Use VS Code's bracket matching</div>
+          <div class="step-desc">Click just inside any <code>{</code> or <code>[</code> bracket in VS Code — the matching closing bracket will highlight. This is the fastest way to spot an unclosed object or array that would cause a JS syntax error.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Required File Ending — Check This Every Time</span>
+      <pre><span class="c">  // ── Step 8: done — dismiss loading screen</span>
+  <span class="k">await</span> Loader.<span class="k">dismiss</span>();
+
+})();          <span class="c">// ← closes the async init function</span>
+&lt;/script&gt;     <span class="c">// ← closes the main script block</span>
+&lt;/body&gt;       <span class="c">// ← closes the body</span>
+&lt;/html&gt;       <span class="c">// ← closes the document</span></pre>
+    </div>
+
+    <div class="warn">
+      <span class="warn-icon">⚠️</span>
+      <p><strong>Stuck on loading screen?</strong> 90% of the time it means one of these: (1) the file is truncated and the closing <code>&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code> is missing, (2) there's a JavaScript syntax error from a missing comma or unclosed backtick, or (3) a function like <code>renderAll()</code> crashed silently. Open DevTools (F12) → Console to see the exact error.</p>
+    </div>
+  </div>
+
+
+  <!-- SECTION 12 — Publishing Checklist (was Section 9) -->
+  <div class="section">
+    <span class="section-anchor" id="s12"></span>
+    <div class="section-tag">Section 12</div>
     <h2 class="section-title">Publishing Checklist</h2>
     <div class="section-body">
       <p>Before you push to GitHub, run through this checklist:</p>
@@ -761,9 +936,13 @@ Nothing to suggest the world was about to split open.
       <li><strong>Backtick strings:</strong> All chapter <code>content</code> fields use backticks <code>`</code>, not quotes</li>
       <li><strong>No backticks in text:</strong> My chapter text doesn't contain the <code>`</code> character</li>
       <li><strong>Global chapter numbers:</strong> Chapter numbers don't restart at 1 in Vol 2+</li>
+      <li><strong>volTitle set:</strong> Each chapter has a <code>volTitle</code> matching its parent volume's title</li>
       <li><strong>Commas between entries:</strong> Every object inside <code>novelDetails</code> and data arrays is separated by a comma</li>
       <li><strong>coverImg in all arrays:</strong> I've added <code>coverImg</code> to every array entry, not just <code>novelDetails</code></li>
       <li><strong>updatesData updated:</strong> I've added the new chapter to <code>updatesData</code> at the top of the array</li>
+      <li><strong>heroSlides updated:</strong> If this novel should be featured, I've added a slide to <code>heroSlides</code></li>
+      <li><strong>Notification added:</strong> I've added an entry to <code>notificationsData</code> at the top with a new unique <code>id</code> and <code>read: false</code></li>
+      <li><strong>File ends correctly:</strong> The file ends with <code>})();</code> then <code>&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></li>
       <li><strong>Tested locally:</strong> Opened in browser, novel appears, chapter opens and reads correctly, scrolls to top on Next/Prev</li>
       <li><strong>No console errors:</strong> F12 → Console shows no red errors</li>
       <li><strong>Cover image loads:</strong> Cover image actually shows (not broken placeholder)</li>
