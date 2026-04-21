@@ -348,8 +348,9 @@ body{
     <div class="hero-chip">✍️ Writing Format</div>
     <div class="hero-chip">🗂️ Volumes & Chapters</div>
     <div class="hero-chip">🖼️ Covers & Images</div>
-    <div class="hero-chip new">🎠 Hero Slides — New</div>
-    <div class="hero-chip new">🔔 Notifications — New</div>
+    <div class="hero-chip new">🎠 Hero Slides</div>
+    <div class="hero-chip new">🔔 Notifications</div>
+    <div class="hero-chip new">📚 Book & Volume Updates — New</div>
     <div class="hero-chip">🐰 Frenzyyy's Work</div>
   </div>
 </div>
@@ -368,7 +369,7 @@ body{
       <li><a href="#s5"><span class="toc-num">5</span>Writing & Formatting Chapter Content</a></li>
       <li><a href="#s6"><span class="toc-num">6</span>Cover Images</a></li>
       <li><a href="#s7"><span class="toc-num">7</span>Adding to Tabs & Feeds</a></li>
-      <li><a href="#s8"><span class="toc-num">8</span>The NEW Tag & Chapter Updates</a></li>
+      <li><a href="#s8"><span class="toc-num">8</span>The NEW Tag & Updates Feed</a></li>
       <li><a href="#s9"><span class="toc-num">9</span>Hero Slides <span class="new-badge">New</span></a></li>
       <li><a href="#s10"><span class="toc-num">10</span>Notifications <span class="new-badge">New</span></a></li>
       <li><a href="#s11"><span class="toc-num">11</span>File Integrity & Safe Editing <span class="new-badge">New</span></a></li>
@@ -383,8 +384,9 @@ body{
     <div class="section-tag">Section 01</div>
     <h2 class="section-title">How NovéLore Stores Novels</h2>
     <div class="section-body">
-      <p>NovéLore is a <strong>single HTML file</strong>. All novel data lives directly inside <code>novelore.html</code> as JavaScript objects — no database, no server, no backend. To add or update a novel, you edit the file and re-upload it.</p>
-      <p>There are two main places you'll edit when adding a novel:</p>
+      <p>NovéLore is a <strong>multi-file website</strong>. The site is split into separate files — but as an author, there is only <strong>one file you need to edit: <code>data.js</code></strong>. This is where all novel content lives — no database, no server, no backend. To add or update a novel, you edit <code>data.js</code> and re-upload it.</p>
+      <p>The main app (<code>index.html</code>) loads <code>data.js</code> automatically on startup. You never need to touch <code>index.html</code> or any other file.</p>
+      <p>There are two main places you'll edit inside <code>data.js</code> when adding a novel:</p>
     </div>
     <div class="steps">
       <div class="step-card">
@@ -398,7 +400,7 @@ body{
         <div class="step-num">B</div>
         <div class="step-content">
           <div class="step-title">Data arrays — which tabs it appears in</div>
-          <div class="step-desc">Separate arrays control which tabs and sections display your novel as a card: <code>trendingData</code>, <code>hotPicksData</code>, <code>frenzyyyData</code>, <code>dojoDuelsData</code>, <code>novelsNew</code>, <code>updatesData</code>, <code>announcementsData</code>, <code>heroSlides</code>, and <code>notificationsData</code>. You add a short entry to whichever arrays apply.</div>
+          <div class="step-desc">Separate arrays control which tabs and sections display your novel as a card: <code>trendingData</code>, <code>hotPicksData</code>, <code>frenzyyyData</code>, <code>novelsNew</code>, <code>bookUpdatesData</code>, <code>volumeUpdatesData</code>, <code>updatesData</code>, <code>announcementsData</code>, <code>heroSlides</code>, and <code>notificationsData</code>. You add a short entry to whichever arrays apply.</div>
         </div>
       </div>
     </div>
@@ -418,8 +420,8 @@ body{
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">Open novelore.html in VS Code</div>
-          <div class="step-desc">Right-click the file → "Open with Code". Never use Notepad — it doesn't handle large files well and can corrupt line endings.</div>
+          <div class="step-title">Open <code>data.js</code> in VS Code</div>
+          <div class="step-desc">Right-click <code>data.js</code> → "Open with Code". This is the only file you need to edit to add or update novels. Never use Notepad — it doesn't handle large files well and can corrupt line endings.</div>
         </div>
       </div>
       <div class="step-card">
@@ -440,7 +442,7 @@ body{
         <div class="step-num">4</div>
         <div class="step-content">
           <div class="step-title">Add card entries to the right data arrays</div>
-          <div class="step-desc">Search for <code>const frenzyyyData</code>, <code>const trendingData</code>, <code>const novelsNew</code>, etc. Add a short card object for your novel to whichever arrays you want it to appear in. See Section 7 for details.</div>
+          <div class="step-desc">Search for <code>const frenzyyyData</code>, <code>const trendingData</code>, <code>const bookUpdatesData</code>, <code>const novelsNew</code>, etc. Add a short card object for your novel to whichever arrays you want it to appear in. See Section 7 for details.</div>
         </div>
       </div>
       <div class="step-card">
@@ -484,7 +486,7 @@ body{
   <span class="k">title</span>:         <span class="s">'My Novel Title'</span>,
   <span class="k">author</span>:        <span class="s">'Your Name'</span>,
   <span class="k">bg</span>:            <span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
-  <span class="k">emoji</span>:         <span class="s">'📖'</span>,                 <span class="c">// shown as placeholder when no cover</span>
+  <span class="k">emoji</span>:         <span class="s">'M'</span>,                 <span class="c">// one letter or emoji — shown as the cover placeholder</span>
   <span class="k">coverImg</span>:      <span class="s">'https://i.imgur.com/yourimage.png'</span>, <span class="c">// or '' to use emoji</span>
   <span class="k">genres</span>:        [<span class="s">'Fantasy'</span>, <span class="s">'Action'</span>, <span class="s">'Adventure'</span>],
   <span class="k">status</span>:        <span class="s">'Ongoing'</span>,            <span class="c">// 'Ongoing' | 'Completed' | 'Hiatus'</span>
@@ -703,38 +705,47 @@ Nothing to suggest the world was about to split open.
       <tr><td class="field-name">trendingData</td><td>🔥 Trending tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">hotPicksData</td><td>⭐ Hot Picks tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">frenzyyyData</td><td>✍️ Frenzyyy's Work tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
-      <tr><td class="field-name">dojoDuelsData</td><td>🥋 Dojo Duels tab</td><td>title, novelId, emoji, bg, rating, genre, status, coverImg</td></tr>
       <tr><td class="field-name">novelsNew</td><td>✨ What's New tab</td><td>title, novelId, emoji, bg, description, genre, status, rating, isNew, coverImg</td></tr>
-      <tr><td class="field-name">updatesData</td><td>Chapter updates feed</td><td>novelId, novelTitle, emoji, chapter, chapterTitle, time</td></tr>
+      <tr><td class="field-name">bookUpdatesData</td><td>📚 Book Updates section (Updates tab)</td><td>novelId, novelTitle, emoji, bookTitle, description, time</td></tr>
+      <tr><td class="field-name">volumeUpdatesData</td><td>📂 Volume Updates section (Updates tab)</td><td>novelId, novelTitle, emoji, volumeNumber, volumeTitle, description, time</td></tr>
+      <tr><td class="field-name">updatesData</td><td>📖 Chapter Updates section (Updates tab)</td><td>novelId, novelTitle, emoji, chapter, chapterTitle, time</td></tr>
       <tr><td class="field-name">announcementsData</td><td>Announcements feed</td><td>title, body, type, date, novelId</td></tr>
     </table>
     </div>
 
     <div class="code-block">
-      <span class="code-label">Example — Adding to frenzyyyData and novelsNew</span>
+      <span class="code-label">Example — Adding to frenzyyyData, novelsNew, and the Updates arrays</span>
       <pre><span class="c">// Frenzyyy's Work tab card</span>
 <span class="k">const frenzyyyData</span> = [
-  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
     <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
     <span class="k">rating</span>:<span class="n">4.5</span>, <span class="k">genre</span>:<span class="s">'Fantasy'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>,
     <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
 ];
 
-<span class="c">// Dojo Duels tab card (same shape as above)</span>
-<span class="k">const dojoDuelsData</span> = [
-  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'⚔️'</span>,
-    <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#1A3A2A 0%,#0D1A12 100%)'</span>,
-    <span class="k">rating</span>:<span class="n">4.2</span>, <span class="k">genre</span>:<span class="s">'Action'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>,
-    <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
-];
-
 <span class="c">// What's New tab card</span>
 <span class="k">const novelsNew</span> = [
-  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+  { <span class="k">title</span>:<span class="s">'My Novel'</span>, <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
     <span class="k">bg</span>:<span class="s">'linear-gradient(160deg,#C44B1A 0%,#3B1A08 100%)'</span>,
     <span class="k">description</span>:<span class="s">'A short tagline for the novel.'</span>,
     <span class="k">genre</span>:<span class="s">'Fantasy'</span>, <span class="k">status</span>:<span class="s">'Ongoing'</span>, <span class="k">rating</span>:<span class="n">4.5</span>,
     <span class="k">isNew</span>:<span class="n">true</span>, <span class="k">coverImg</span>:<span class="s">'https://i.imgur.com/yourimage.png'</span> },
+];
+
+<span class="c">// Book Updates section (appears first in Updates tab)</span>
+<span class="k">const bookUpdatesData</span> = [
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
+    <span class="k">bookTitle</span>:<span class="s">'My Novel'</span>,
+    <span class="k">description</span>:<span class="s">'Now live — free to read. Fantasy · Action.'</span>,
+    <span class="k">time</span>:<span class="s">'Jan 01, 2026'</span> },
+];
+
+<span class="c">// Volume Updates section (appears second in Updates tab)</span>
+<span class="k">const volumeUpdatesData</span> = [
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
+    <span class="k">volumeNumber</span>:<span class="n">1</span>, <span class="k">volumeTitle</span>:<span class="s">'Volume One Arc'</span>,
+    <span class="k">description</span>:<span class="s">'Vol. 1 is underway — new chapters dropping regularly.'</span>,
+    <span class="k">time</span>:<span class="s">'Jan 01, 2026'</span> },
 ];</pre>
     </div>
 
@@ -749,17 +760,39 @@ Nothing to suggest the world was about to split open.
   <div class="section">
     <span class="section-anchor" id="s8"></span>
     <div class="section-tag">Section 08</div>
-    <h2 class="section-title">The NEW Tag & Chapter Updates</h2>
+    <h2 class="section-title">The NEW Tag & Updates Feed</h2>
     <div class="section-body">
       <p>The <strong>NEW</strong> badge on the chapter list is automatic — it always appears on only the <strong>latest chapter</strong> (the one with the highest chapter number). You don't need to set anything. When you add a new chapter, the badge moves to it automatically.</p>
-      <p>To announce a new chapter in the <strong>Updates feed</strong>, add an entry to <code>updatesData</code>. Always add new entries at the top of the array so the most recent update appears first.</p>
+      <p>The <strong>Updates tab</strong> has three sub-sections that always appear in this order: <strong>Book Updates → Volume Updates → Chapter Updates</strong>. Each is powered by its own array in <code>data.js</code>. You only need to add to the ones that are relevant — if an array is empty, its section is simply hidden.</p>
     </div>
 
     <div class="code-block">
-      <span class="code-label">Adding a Chapter Update</span>
+      <span class="code-label">Book Updates — announce when a novel is first published</span>
+      <pre><span class="k">const bookUpdatesData</span> = [
+  <span class="c">// ← newest entries go at the TOP</span>
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
+    <span class="k">bookTitle</span>:<span class="s">'My Novel'</span>,
+    <span class="k">description</span>:<span class="s">'Now live — free to read. Fantasy · Action · Adventure.'</span>,
+    <span class="k">time</span>:<span class="s">'Jan 01, 2026'</span> },
+];</pre>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Volume Updates — announce a new volume starting</span>
+      <pre><span class="k">const volumeUpdatesData</span> = [
+  <span class="c">// ← newest entries go at the TOP</span>
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
+    <span class="k">volumeNumber</span>:<span class="n">1</span>, <span class="k">volumeTitle</span>:<span class="s">'Volume One Arc'</span>,
+    <span class="k">description</span>:<span class="s">'Vol. 1 is underway — new chapters dropping regularly.'</span>,
+    <span class="k">time</span>:<span class="s">'Jan 01, 2026'</span> },
+];</pre>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">Chapter Updates — announce each new chapter drop</span>
       <pre><span class="k">const updatesData</span> = [
   <span class="c">// ← newest entries go at the TOP</span>
-  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'📖'</span>,
+  { <span class="k">novelId</span>:<span class="s">'my-novel'</span>, <span class="k">novelTitle</span>:<span class="s">'My Novel'</span>, <span class="k">emoji</span>:<span class="s">'M'</span>,
     <span class="k">chapter</span>:<span class="n">3</span>, <span class="k">chapterTitle</span>:<span class="s">'Vol. 1 Ch. 3 — The Title'</span>,
     <span class="k">time</span>:<span class="s">'Apr 06, 2026'</span> },
   <span class="c">// older entries below...</span>
@@ -768,7 +801,7 @@ Nothing to suggest the world was about to split open.
 
     <div class="tip">
       <span class="tip-icon">🥕</span>
-      <p>The first 3 entries in <code>updatesData</code> automatically get a <strong>NEW</strong> pill badge on the updates feed. So always put your freshest chapter update at position 1.</p>
+      <p>The first entry in <code>bookUpdatesData</code> and <code>volumeUpdatesData</code> automatically gets a <strong>NEW</strong> pill badge. In <code>updatesData</code>, the first <strong>3</strong> entries get the badge. Always put your freshest entry at position 1 of each array.</p>
     </div>
   </div>
 
@@ -870,22 +903,22 @@ Nothing to suggest the world was about to split open.
     <div class="section-tag">Section 11 — New</div>
     <h2 class="section-title">File Integrity & Safe Editing</h2>
     <div class="section-body">
-      <p>Because NovéLore is a single HTML file, <strong>the whole file must be intact</strong> for anything to work. A truncated or missing closing tag means the JavaScript never runs — and the app is permanently stuck on the loading screen with no error message.</p>
+      <p>Because NovéLore's data lives in <code>data.js</code>, <strong>that file must be intact and valid JavaScript</strong> for anything to work. A truncated file or a syntax error means <code>data.js</code> fails to load — and the app is permanently stuck on the loading screen with no visible error message.</p>
     </div>
 
     <div class="steps">
       <div class="step-card">
         <div class="step-num">1</div>
         <div class="step-content">
-          <div class="step-title">Always verify the file ends correctly</div>
-          <div class="step-desc">Scroll to the absolute bottom of <code>novelore.html</code>. The last few lines should always be: <code>})();</code> followed by <code>&lt;/script&gt;</code>, <code>&lt;/body&gt;</code>, and <code>&lt;/html&gt;</code>. If any of these are missing, the page will be stuck on the loading screen.</div>
+          <div class="step-title">Always verify <code>data.js</code> ends correctly</div>
+          <div class="step-desc">Scroll to the absolute bottom of <code>data.js</code>. The last line of the file should always be <code>};</code> — that's the closing of the <code>novelDetails</code> object. If anything after the last novel entry is missing or cut off, the app won't load.</div>
         </div>
       </div>
       <div class="step-card">
         <div class="step-num">2</div>
         <div class="step-content">
           <div class="step-title">Never copy-paste a partial file</div>
-          <div class="step-desc">When copying the file to share or back up, always use "Select All" (<strong>Ctrl+A</strong>) in VS Code to make sure you get the entire file. Copy-pasting from a browser or a chat window can silently truncate the end.</div>
+          <div class="step-desc">When copying <code>data.js</code> to share or back up, always use "Select All" (<strong>Ctrl+A</strong>) in VS Code to make sure you get the entire file. Copy-pasting from a browser or a chat window can silently truncate the end.</div>
         </div>
       </div>
       <div class="step-card">
@@ -905,19 +938,20 @@ Nothing to suggest the world was about to split open.
     </div>
 
     <div class="code-block">
-      <span class="code-label">Required File Ending — Check This Every Time</span>
-      <pre><span class="c">  // ── Step 8: done — dismiss loading screen</span>
-  <span class="k">await</span> Loader.<span class="k">dismiss</span>();
-
-})();          <span class="c">// ← closes the async init function</span>
-&lt;/script&gt;     <span class="c">// ← closes the main script block</span>
-&lt;/body&gt;       <span class="c">// ← closes the body</span>
-&lt;/html&gt;       <span class="c">// ← closes the document</span></pre>
+      <span class="code-label">Required data.js Ending — Check This Every Time</span>
+      <pre><span class="c">        // ... last chapter content</span>
+        <span class="s">`</span>
+          }
+        ]
+      }
+    ]
+  }                  <span class="c">// ← closes the last novel entry</span>
+};                   <span class="c">// ← closes novelDetails — this MUST be the last line</span></pre>
     </div>
 
     <div class="warn">
       <span class="warn-icon">⚠️</span>
-      <p><strong>Stuck on loading screen?</strong> 90% of the time it means one of these: (1) the file is truncated and the closing <code>&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code> is missing, (2) there's a JavaScript syntax error from a missing comma or unclosed backtick, or (3) a function like <code>renderAll()</code> crashed silently. Open DevTools (F12) → Console to see the exact error.</p>
+      <p><strong>Stuck on loading screen?</strong> 90% of the time it means one of these: (1) <code>data.js</code> is truncated and the closing <code>};</code> of <code>novelDetails</code> is missing, (2) there's a JavaScript syntax error from a missing comma or unclosed backtick, or (3) <code>data.js</code> failed to load at all (check it's in the same folder as <code>index.html</code>). Open DevTools (F12) → Console to see the exact error.</p>
     </div>
   </div>
 
@@ -940,9 +974,11 @@ Nothing to suggest the world was about to split open.
       <li><strong>Commas between entries:</strong> Every object inside <code>novelDetails</code> and data arrays is separated by a comma</li>
       <li><strong>coverImg in all arrays:</strong> I've added <code>coverImg</code> to every array entry, not just <code>novelDetails</code></li>
       <li><strong>updatesData updated:</strong> I've added the new chapter to <code>updatesData</code> at the top of the array</li>
+      <li><strong>bookUpdatesData updated:</strong> If this is a new novel, I've added an entry to <code>bookUpdatesData</code></li>
+      <li><strong>volumeUpdatesData updated:</strong> If this is a new volume, I've added an entry to <code>volumeUpdatesData</code></li>
       <li><strong>heroSlides updated:</strong> If this novel should be featured, I've added a slide to <code>heroSlides</code></li>
       <li><strong>Notification added:</strong> I've added an entry to <code>notificationsData</code> at the top with a new unique <code>id</code> and <code>read: false</code></li>
-      <li><strong>File ends correctly:</strong> The file ends with <code>})();</code> then <code>&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;</code></li>
+      <li><strong>data.js ends correctly:</strong> The file ends with <code>};</code> (closing <code>novelDetails</code>)</li>
       <li><strong>Tested locally:</strong> Opened in browser, novel appears, chapter opens and reads correctly, scrolls to top on Next/Prev</li>
       <li><strong>No console errors:</strong> F12 → Console shows no red errors</li>
       <li><strong>Cover image loads:</strong> Cover image actually shows (not broken placeholder)</li>
